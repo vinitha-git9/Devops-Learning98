@@ -27,8 +27,7 @@ Types of Kernel:
 **Hybrid kernel:**
 
 1. attempt to combine the best elements of both monolithic and microkernel designs. 
-1. They aim to achieve the efficiency of monolithic kernels by running some services in kernel space while maintaining the reliability and security of microkernels by running other services in user space
-1. https://trainees.mallow-tech.com/attendance/my-check-in-data
+1. They aim to achieve the efficiency of monolithic kernels by running some services in kernel space while maintaining the reliability and security of microkernels by running other services in user space.
 
 
 
@@ -42,7 +41,8 @@ What’s Inside a Linux Distribution?
 1. **Linux Kernel**:
 1. GNU Tools & Libraries
 1. Package Management System
-1. Software Applications
+1. Software Application
+s
 1. Graphical User Interface (GUI)
 1. System Libraries & Utilities
 1. Bootloader
