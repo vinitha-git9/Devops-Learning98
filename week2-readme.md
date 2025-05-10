@@ -1,159 +1,226 @@
-Week:2
 
-Shell : In computing, a shell is a user interface that provides access to the services of an operating system
-Command-Line Shells:
-1.	Bourne Shell (sh)
-2.	Bash (Bourne Again Shell)
-3.	Zsh (Z Shell)
-4.	KornShell (ksh)
-5.	Fish (Friendly Interactive Shell) 
+# Week 2 - Shell and Shell Scripting
 
-2. Shell Scripting
-Shell scripting is the practice of writing scripts using a shell's scripting language to automate tasks.
-An expert shell script writer utilizes constructs such as:
-•	Loops (for, while)
-•	Conditional logic (if, case)
-•	Functions
-•	Stream redirection and pipelines
-•	Process substitution
-________________________________________
+## 1. Shells in Computing
 
-1.Getting Started with Shell Scripting: Naming, Permissions, Variables, Builtins.
-# sharp
-! Bang
-#! Shebang
-Builtins :
-Type echo
-O/p: echo is a shell builtins
+A **shell** is a user interface that provides access to the services of an operating system.
 
-Commands:
-To check which shell is using in OS:
-Echo $SHELL
-How to create command bash script:
-Cd desktop/
+### Common Command-Line Shells:
+
+- **Bourne Shell** (`sh`)
+- **Bash** (Bourne Again Shell)
+- **Zsh** (Z Shell)
+- **KornShell** (`ksh`)
+- **Fish** (Friendly Interactive Shell)
+
+---
+
+## 2. Shell Scripting
+
+Shell scripting involves writing scripts using a shell's scripting language to automate tasks.
+
+### Key Constructs:
+
+- Loops: `for`, `while`
+- Conditionals: `if`, `case`
+- Functions
+- Stream redirection and pipelines
+- Process substitution
+
+---
+
+## 3. Getting Started
+
+### Script Basics:
+
+- `#` - Sharp
+- `!` - Bang
+- `#!` - Shebang (used to specify the script interpreter)
+
+### Built-ins:
+
+```bash
+type echo
+# Output: echo is a shell builtin
+```
+
+---
+
+## 4. Working with Shell Scripts
+
+### Check current shell:
+
+```bash
+echo $SHELL
+```
+
+### Creating and running a shell script:
+
+```bash
+cd Desktop/
 touch hello.sh
-Nano hello.sh
-Script:
-#! /bin/bash
-Echo “hello world”
+nano hello.sh
+```
 
-Chmod +x hello.sh
+**Script Content:**
+
+```bash
+#!/bin/bash
+echo "hello world"
+```
+
+Make it executable and run:
+
+```bash
+chmod +x hello.sh
 ./hello.sh
-O/p: Hello world
-Two types if variables:
-1.	Environment Variables
-2.	User-defined
-Environment Variables:
-Echo $bash
-Echo $bash_version
-Echo $pwd
-Echo$home
+# Output: hello world
+```
 
-O/p: /bin/bash
-4.0.12.4 version
-Desktop
-/home/text
+---
 
-How to use variables:
-Name=’vinitha’
-Echo “my name is $Name”
-o/p:  my name is vinitha
+## 5. Variables in Shell
 
+### Types:
 
+- Environment Variables
+- User-defined Variables
 
-Read User Input:
- 
+### Examples:
 
+```bash
+echo $BASH
+# Output: /bin/bash
 
- 
- 
-Append text to varaiable:
-Name ‘vinitha’
-Echo “my name is ${Name}R”
-0r
-Word ‘string’
-Echo “this is ${word}ing”
-Combine two variable:
-Echo “${name}${word}.”
-Special Variables, Pseudocode, Command Substitution, if Statement, Conditionals.
-#display the userid and username of the executing user:
-#display if the user is root user or not.
- 
- 
-#display the uid:
-Echo “your userid is ${uid}”
-Uid is manual in bash
-O/p: your userid is 1000
-General commands manual
-Command: man bash
-Id -u
-o/p: 1000
-id -n
-o/p: root
-If statement:
- 
+echo $BASH_VERSION
+# Output: e.g., 4.0.12(4)
 
-O/p:
- 	
+echo $PWD
+# Output: current directory path
 
- 
-o/p:
- 
+echo $HOME
+# Output: /home/username
+```
 
-Exit Statuses, Return Codes, String Test Conditionals, More Special Variables.
+### Using Variables:
 
- 
-Goal:
-The goal of this exercise is to create a shell script that adds users to the same Linux system as the script is executed on.
-Scenario:
-Imagine that you're working as a Linux System Administrator for a fast growing company.  The latest company initiative requires you to build and deploy dozens of servers.  You're falling behind schedule and are going to miss your deadline for these new server deployments because you are constantly being interrupted by the help desk calling you to create new Linux accounts for all the people in the company who have been recruited to test out the company's newest Linux-based application.
-In order to meet your deadline and keep your sanity, you decide to write a shell script that will create new user accounts.  Once you're done with the shell script you can put the help desk in charge of creating new accounts which will finally allow you to work uninterrupted and complete your server deployments on time.
+```bash
+Name='vinitha'
+echo "My name is $Name"
+# Output: My name is vinitha
+```
 
- 
- 
-O/p:
- 
+### Append Text:
 
-Random Data, Cryptographic Hash Functions, Text and String Manipulation.
-Random Data:
-Echo ${RANDOM}
-Positional Parameters, Arguments, for Loops, Special Parameters
-Arguments in Shell:
-Static input:
- 
-o/p
- 
+```bash
+echo "My name is ${Name}R"
+# Output: My name is vinithaR
 
-Positional Parameters
+word='string'
+echo "This is ${word}ing"
+# Output: This is stringing
+```
 
-${0} fisrt argument
-${1} second argument
-${2} third argument
-………………………… ${#} -TOTAL NO.OF ARGUMENT
+### Combine Variables:
 
- 
-o/p:
- 
-Dynamic Input:
+```bash
+echo "${Name}${word}."
+```
 
- 
-O/P:
- 
+---
 
-For loop:
- 
-o/p:
- 
-The while Loop, Infinite Loops, Shifting, Sleeping
-While loop:
- 
- 
-True: 
-Do nothing return the exit comment as 0
-Sleep:
- 
+## 6. Special Variables and Conditionals
 
-SHIFT:
- 
-o/p:
- 
+### Display User Information:
+
+```bash
+echo "Your userid is ${UID}"  # UID is case-sensitive
+id -u
+# Output: 1000
+
+id -un
+# Output: username
+```
+
+### If Statement Example:
+
+```bash
+if [ "$UID" -eq 0 ]; then
+  echo "You are root"
+else
+  echo "You are not root"
+fi
+```
+
+---
+
+## 7. Goal-Oriented Scripting
+
+### Task:
+
+Write a shell script to add users to the system, automating account creation to assist the help desk and improve deployment efficiency.
+
+---
+
+## 8. Random Data and Text Manipulation
+
+### Generate Random Numbers:
+
+```bash
+echo $RANDOM
+```
+
+---
+
+## 9. Arguments and Loops
+
+### Static Input Example:
+
+```bash
+echo "First argument is $1"
+echo "Total number of arguments: $#"
+```
+
+### Positional Parameters:
+
+- `${0}` - Script name
+- `${1}`, `${2}`, etc. - Arguments
+- `${#}` - Number of arguments
+
+---
+
+## 10. Loops
+
+### For Loop:
+
+```bash
+for i in 1 2 3
+do
+  echo $i
+done
+```
+
+### While Loop:
+
+```bash
+while true
+do
+  echo "Looping..."
+  sleep 1
+done
+```
+
+### Shift Command:
+
+```bash
+shift
+# Used to shift positional parameters to the left
+```
+
+---
+
+## Notes
+
+- Practice creating scripts with conditionals and loops.
+- Make use of built-in variables and parameters.
+- Use `man bash` to explore command documentation.
