@@ -1,108 +1,67 @@
 
-# Week 2 - Shell and Shell Scripting
+# Week 2: Shell Scripting Basics
 
-## 1. Shells in Computing
+## 🐚 Shell Overview
 
-A **shell** is a user interface that provides access to the services of an operating system.
+- **Shell**: Interface to access OS services.
+- **Current Shell**: `bash` (Bourne Again Shell)
+- **Shell Scripting**: Automating tasks using shell scripting language.
 
-### Common Command-Line Shells:
-
-- **Bourne Shell** (`sh`)
-- **Bash** (Bourne Again Shell)
-- **Zsh** (Z Shell)
-- **KornShell** (`ksh`)
-- **Fish** (Friendly Interactive Shell)
-
----
-
-## 2. Shell Scripting
-
-Shell scripting involves writing scripts using a shell's scripting language to automate tasks.
-
-### Key Constructs:
-
+Key features:
 - Loops: `for`, `while`
 - Conditionals: `if`, `case`
 - Functions
-- Stream redirection and pipelines
+- Stream redirection & pipelines
 - Process substitution
 
 ---
 
-## 3. Getting Started
+## 🔧 Getting Started
 
-### Script Basics:
-
-- `#` - Sharp
-- `!` - Bang
-- `#!` - Shebang (used to specify the script interpreter)
-
-### Built-ins:
+### Naming and Permissions
 
 ```bash
-type echo
-# Output: echo is a shell builtin
+touch hello.sh         # Create script
+chmod +x hello.sh      # Make executable
+vi hello.sh            # Edit script
 ```
 
----
-
-## 4. Working with Shell Scripts
-
-### Check current shell:
+### Shebang
 
 ```bash
-echo $SHELL
+#! /bin/bash
+# '!' = Bang, '#' = Sharp → Together: Shebang
 ```
 
-### Creating and running a shell script:
+### Built-in Commands
 
 ```bash
-cd Desktop/
-touch hello.sh
-nano hello.sh
+type echo      # echo is a shell builtin
+echo $SHELL    # Show current shell
 ```
 
-**Script Content:**
+### Running Script
 
 ```bash
-#!/bin/bash
-echo "hello world"
-```
-
-Make it executable and run:
-
-```bash
-chmod +x hello.sh
 ./hello.sh
-# Output: hello world
 ```
 
 ---
 
-## 5. Variables in Shell
+## 🧩 Variables
 
-### Types:
+### Types
 
-- Environment Variables
-- User-defined Variables
-
-### Examples:
+- **Environment Variables**
 
 ```bash
-echo $BASH
-# Output: /bin/bash
-
-echo $BASH_VERSION
-# Output: e.g., 4.0.12(4)
-
-echo $PWD
-# Output: current directory path
-
-echo $HOME
-# Output: /home/username
+echo $bash            # /bin/bash
+echo $bash_version    # e.g., 4.0.2.5
+echo $pwd             # Current directory
+echo $home            # Home directory
 ```
 
-### Using Variables:
+- **User-defined Variables**
 
 ```bash
 Name='vinitha'
@@ -110,117 +69,234 @@ echo "My name is $Name"
 # Output: My name is vinitha
 ```
 
-### Append Text:
+### Append Text to Variable
 
 ```bash
+Name='vinitha'
 echo "My name is ${Name}R"
-# Output: My name is vinithaR
 
-word='string'
-echo "This is ${word}ing"
-# Output: This is stringing
+Word='string'
+echo "This is ${Word}ing"
 ```
 
-### Combine Variables:
+### Combine Variables
 
 ```bash
-echo "${Name}${word}."
+echo "${Name}${Word}."
 ```
 
 ---
 
-## 6. Special Variables and Conditionals
-
-### Display User Information:
+## 📥 User Input
 
 ```bash
-echo "Your userid is ${UID}"  # UID is case-sensitive
-id -u
-# Output: 1000
-
-id -un
-# Output: username
+read Name
+echo "Welcome, $Name"
 ```
 
-### If Statement Example:
+---
+
+## 🔢 Special Variables and Substitution
 
 ```bash
-if [ "$UID" -eq 0 ]; then
-  echo "You are root"
+echo "Your user ID is ${UID}"
+id -un       # Get username
+```
+
+---
+
+## ✅ Conditionals
+
+### `if` Statement
+
+```bash
+if [[ condition ]]; then
+  command
+fi
+```
+
+### `if-else` Example
+
+```bash
+num=10
+
+if [[ $num -gt 5 ]]; then
+  echo "Number is greater than 5"
 else
-  echo "You are not root"
+  echo "Number is less than or equal to 5"
 fi
 ```
 
 ---
 
-## 7. Goal-Oriented Scripting
+## 🔤 String Comparison Operators
 
-### Task:
-
-Write a shell script to add users to the system, automating account creation to assist the help desk and improve deployment efficiency.
+| Operator | Description      |
+|----------|------------------|
+| `==`     | Equal            |
+| `!=`     | Not equal        |
+| `-z`     | String is empty  |
+| `-n`     | String is not empty |
 
 ---
 
-## 8. Random Data and Text Manipulation
+## 📁 File Test Operators
 
-### Generate Random Numbers:
+| Operator | Tests if...        | Example            |
+|----------|--------------------|--------------------|
+| `-e`     | File exists        | `[ -e file.txt ]`  |
+| `-f`     | Regular file       | `[ -f file.txt ]`  |
+| `-d`     | Directory          | `[ -d dir ]`       |
+| `-r`     | Readable           | `[ -r file.txt ]`  |
+| `-w`     | Writable           | `[ -w file.txt ]`  |
+| `-x`     | Executable         | `[ -x script.sh ]` |
+| `-s`     | File not empty     | `[ -s file.txt ]`  |
+
+---
+
+## 🔢 Arithmetic Operators
 
 ```bash
-echo $RANDOM
+((a + b))   # Addition
+((a - b))   # Subtraction
+((a * b))   # Multiplication
+((a / b))   # Division
+((a % b))   # Modulus
+((a++))     # Increment
+((--a))     # Decrement
 ```
 
 ---
 
-## 9. Arguments and Loops
+## 🔁 Loops
 
-### Static Input Example:
-
-```bash
-echo "First argument is $1"
-echo "Total number of arguments: $#"
-```
-
-### Positional Parameters:
-
-- `${0}` - Script name
-- `${1}`, `${2}`, etc. - Arguments
-- `${#}` - Number of arguments
-
----
-
-## 10. Loops
-
-### For Loop:
+### `for` Loop
 
 ```bash
-for i in 1 2 3
+for fruit in apple banana cherry
 do
-  echo $i
+  echo "I like $fruit"
 done
 ```
 
-### While Loop:
+### `while` Loop
 
 ```bash
-while true
+count=1
+while [ $count -le 3 ]
 do
-  echo "Looping..."
-  sleep 1
+  echo "Count is $count"
+  ((count++))
 done
-```
-
-### Shift Command:
-
-```bash
-shift
-# Used to shift positional parameters to the left
 ```
 
 ---
 
-## Notes
+## 📦 Arrays
 
-- Practice creating scripts with conditionals and loops.
-- Make use of built-in variables and parameters.
-- Use `man bash` to explore command documentation.
+```bash
+Fruits=(apple banana watermelon)
+echo "${Fruits[0]}"       # First element
+echo "${Fruits[@]}"       # All elements
+echo "${#Fruits[@]}"      # Length
+```
+
+---
+
+## 🔐 Special Topics
+
+- Random Data: `echo $RANDOM`
+- Exit Status: `$?`
+- Positional Parameters: `$0`, `$1`, `$2`, …, `$#`
+
+---
+
+## 🧪 User Management Script Goal
+
+**Objective**: Automate user creation for a growing company to reduce manual work.
+
+---
+
+## 🛠️ System Commands (Common)
+
+### System Info
+
+- `uname -a` – Kernel name and version
+- `hostname` – Show or set hostname
+- `uptime` – System running time
+- `top` – Live process monitor
+- `free -h` – Memory status
+- `lscpu` – CPU architecture
+- `lsblk` – Block devices
+
+### Disk & File Management
+
+- `df -h` – Disk usage
+- `du -sh` – Directory size
+
+### User Management
+
+```bash
+useradd username
+passwd username
+userdel username
+usermod -aG group username
+id username
+who
+```
+
+### Permissions
+
+```bash
+chmod 755 file
+chown user:group file
+ls -l
+umask
+```
+
+### Package Management
+
+```bash
+apt update
+apt upgrade
+apt install package
+apt remove package
+```
+
+### Services
+
+```bash
+systemctl status ssh
+systemctl restart apache2
+```
+
+### Networking
+
+```bash
+ip a
+ping google.com
+ss -tuln
+nmap localhost
+curl http://example.com
+```
+
+### Logs
+
+```bash
+journalctl
+dmesg
+```
+
+### Cron & Scheduling
+
+```bash
+crontab -e
+at now + 1 minute
+```
+
+### Shutdown & Reboot
+
+```bash
+shutdown now
+reboot
+```
