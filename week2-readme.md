@@ -1,302 +1,370 @@
+# Shell Scripting Notes
 
-# Week 2: Shell Scripting Basics
+Week:2
 
-## 🐚 Shell Overview
+Shell : user interface that provides access to the services of an operating system
 
-- **Shell**: Interface to access OS services.
-- **Current Shell**: `bash` (Bourne Again Shell)
-- **Shell Scripting**: Automating tasks using shell scripting language.
+Current shell : Bash (Bourne Again Shell
 
-Key features:
-- Loops: `for`, `while`
-- Conditionals: `if`, `case`
-- Functions
-- Stream redirection & pipelines
-- Process substitution
+Shell scripting :writing scripts using a shell's scripting language to automate tasks.
 
----
+Loops (for, while) ,Conditional logic (if, case) ,Functions, Stream redirection and pipelines, Process substitution
 
-## 🔧 Getting Started
+Getting Started with Shell Scripting: Naming, Permissions, Variables, Builtins.
 
-### Naming and Permissions
+Naming:  touch hello.sh
 
-```bash
-touch hello.sh         # Create script
-chmod +x hello.sh      # Make executable
-vi hello.sh            # Edit script
-```
+Permissions: chmod +x hello.sh
 
-### Shebang
+How to open shell script: vi hello.sh
 
-```bash
 #! /bin/bash
-# '!' = Bang, '#' = Sharp → Together: Shebang
-```
 
-### Built-in Commands
+# sharp
 
-```bash
-type echo      # echo is a shell builtin
-echo $SHELL    # Show current shell
-```
+! Bang
 
-### Running Script
+#! Shebang
 
-```bash
-./hello.sh
-```
+Builtins : Type echo
 
----
+O/p: echo is a shell builtins
 
-## 🧩 Variables
+To check which shell is using in OS: Echo $SHELL
 
-### Types
+How to run the script:  ./ hello.sh
 
-- **Environment Variables**
+Two types if variables:
 
-```bash
-echo $bash            # /bin/bash
-echo $bash_version    # e.g., 4.0.2.5
-echo $pwd             # Current directory
-echo $home            # Home directory
-```
+Environment Variables
 
-- **User-defined Variables**
+User-defined varaibles:
 
-```bash
-Name='vinitha'
-echo "My name is $Name"
-# Output: My name is vinitha
-```
+How to use variables:
 
-### Append Text to Variable
+Name=’vinitha’
 
-```bash
-Name='vinitha'
-echo "My name is ${Name}R"
+Echo “my name is $Name”
 
-Word='string'
-echo "This is ${Word}ing"
-```
+o/p:  my name is vinitha
 
-### Combine Variables
+Read User Input:
 
-```bash
-echo "${Name}${Word}."
-```
+Append text to varaiable:
 
----
+Name ‘vinitha’
 
-## 📥 User Input
+Echo “my name is ${Name}R”
 
-```bash
-read Name
-echo "Welcome, $Name"
-```
+0r
 
----
+Word ‘string’
 
-## 🔢 Special Variables and Substitution
+Echo “this is ${word}ing”
 
-```bash
-echo "Your user ID is ${UID}"
-id -un       # Get username
-```
+Combine two variable:
 
----
+Echo “${name}${word}.”
 
-## ✅ Conditionals
+Special Variables, Pseudocode, Command Substitution, if Statement, Conditionals.
 
-### `if` Statement
+#display the userid and username of the executing user:
 
-```bash
-if [[ condition ]]; then
-  command
-fi
-```
+#display if the user is root user or not.
 
-### `if-else` Example
+UID-to find user id
 
-```bash
+id -un (used to find the username of the user)
+
+$(...) runs id -un and replaces it with the result.
+
+#display the uid:
+
+Echo “your userid is ${UID}”
+
+Uid is manual in bash
+
+O/p: your userid is 1000
+
+General commands manual
+
+Command: man bash
+
+Id -u
+
+o/p: 1000
+
+id -n
+
+o/p: root
+
+If statement:
+
+Syntax:
+
+If  [[ condition ]]
+
+Then
+
+Command
+
+Fi
+
+if-else Condition
+
 num=10
 
-if [[ $num -gt 5 ]]; then
-  echo "Number is greater than 5"
+if [[  ${num}  -gt  5 ]]
+
+then
+
+echo “Number is greater than 5”
+
 else
-  echo "Number is less than or equal to 5"
+
+echo “Number is lesser than 5”
+
 fi
-```
 
----
+O/p:
 
-## 🔤 String Comparison Operators
+o/p:
 
-| Operator | Description      |
-|----------|------------------|
-| `==`     | Equal            |
-| `!=`     | Not equal        |
-| `-z`     | String is empty  |
-| `-n`     | String is not empty |
+🔹 4. String Comparison:
 
----
+Operators:
 
-## 📁 File Test Operators
+== : equal
 
-| Operator | Tests if...        | Example            |
-|----------|--------------------|--------------------|
-| `-e`     | File exists        | `[ -e file.txt ]`  |
-| `-f`     | Regular file       | `[ -f file.txt ]`  |
-| `-d`     | Directory          | `[ -d dir ]`       |
-| `-r`     | Readable           | `[ -r file.txt ]`  |
-| `-w`     | Writable           | `[ -w file.txt ]`  |
-| `-x`     | Executable         | `[ -x script.sh ]` |
-| `-s`     | File not empty     | `[ -s file.txt ]`  |
+!= : not equal
 
----
+-z : string is empty
 
-## 🔢 Arithmetic Operators
+-n : string is not empty
 
-```bash
-((a + b))   # Addition
-((a - b))   # Subtraction
-((a * b))   # Multiplication
-((a / b))   # Division
-((a % b))   # Modulus
-((a++))     # Increment
-((--a))     # Decrement
-```
+Common file test operators:
 
----
+-f : regular file exists
 
-## 🔁 Loops
+-d : directory exists
 
-### `for` Loop
+-e : file or directory exists
 
-```bash
+-r : readable
+
+-w : writable
+
+-x : executable
+
+5. File Conditions
+
+Example:
+
+File=”file.txt”
+
+If [[  -f “file.txt” ]]
+
+Then
+
+Echo “file exist”
+
+Operators:
+
+-f file exsit
+
+-d directory exist
+
+-e file or directory exist
+
+-r reaaable
+
+-w writable
+
+-x executable
+
+Comparison Operators (Numbers)
+
+3. Comparison Operators (Strings)
+
+Logical Operators
+
+🔹 5. File Test Operators
+
+🔹 6. Assignment Operators
+
+Exit Statuses, Return Codes, String Test Conditionals, More Special Variables.
+
+Goal:
+
+The goal of this exercise is to create a shell script that adds users to the same Linux system as the script is executed on.
+
+Scenario:
+
+Imagine that you're working as a Linux System Administrator for a fast growing company.  The latest company initiative requires you to build and deploy dozens of servers.  You're falling behind schedule and are going to miss your deadline for these new server deployments because you are constantly being interrupted by the help desk calling you to create new Linux accounts for all the people in the company who have been recruited to test out the company's newest Linux-based application.
+
+In order to meet your deadline and keep your sanity, you decide to write a shell script that will create new user accounts.  Once you're done with the shell script you can put the help desk in charge of creating new accounts which will finally allow you to work uninterrupted and complete your server deployments on time.
+
+323.
+
+O/p:
+
+Random Data, Cryptographic Hash Functions, Text and String Manipulation.
+
+lRandom Data:
+
+Echo ${RANDOM}
+
+Positional Parameters, Arguments, for Loops, Special Parameters
+
+It's a key part of conditional scripting:
+
+if [ $? -eq 0 ]; then
+
+echo "Command succeeded"
+
+else
+
+echo "Command failed"
+
+fi
+
+Arguments in Shell:
+
+Static input:
+
+o/p
+
+Positional Parameters
+
+${0} fisrt argument
+
+${1} second argument
+
+${2} third argument
+
+………………………… ${#} -TOTAL NO.OF ARGUMENT
+
+o/p:
+
+Dynamic Input:
+
+O/P:
+
+For loop:
+
+o/p:
+
+The while Loop, Infinite Loops, Shifting, Sleeping
+
+While loop:
+
+True:
+
+Do nothing return the exit comment as 0
+
+Sleep:
+
+SHIFT:
+
+o/p:
+
+For Loop:
+
+for var in item1 item2 item3
+
+do
+
+command(s)
+
+done
+
+Example:
+
 for fruit in apple banana cherry
+
 do
-  echo "I like $fruit"
+
+echo "I like $fruit"
+
 done
-```
 
-### `while` Loop
+Output:
 
-```bash
+I like apple
+
+I like banana
+
+I like cherry
+
+🔁 2. While Loop
+
+while [ condition ]
+
+do
+
+command(s)
+
+done
+
+Example:
+
 count=1
+
 while [ $count -le 3 ]
+
 do
-  echo "Count is $count"
-  ((count++))
+
+echo "Count is $count"
+
+count=$((count + 1))
+
 done
-```
 
----
+o/p:
 
-## 📦 Arrays
+Count is 1
 
-```bash
-Fruits=(apple banana watermelon)
-echo "${Fruits[0]}"       # First element
-echo "${Fruits[@]}"       # All elements
-echo "${#Fruits[@]}"      # Length
-```
+Count is 2
 
----
+Count is 3
 
-## 🔐 Special Topics
+Arrays: store multiple values in a single variable
 
-- Random Data: `echo $RANDOM`
-- Exit Status: `$?`
-- Positional Parameters: `$0`, `$1`, `$2`, …, `$#`
+Basic Array Syntax:
 
----
+Declaring an Array:  Fruits=(apple,banana,watermelon)
 
-## 🧪 User Management Script Goal
+Accessing Elements: echo “${Fruits[0]}”
 
-**Objective**: Automate user creation for a growing company to reduce manual work.
+All Elements: echo “${Fruits[@]}”
 
----
+Array Length: echo “${#Fruits[@]}”
 
-## 🛠️ System Commands (Common)
+Basics of Vim editor:
 
-### System Info
+🚀 Starting Vim : vim filename
 
-- `uname -a` – Kernel name and version
-- `hostname` – Show or set hostname
-- `uptime` – System running time
-- `top` – Live process monitor
-- `free -h` – Memory status
-- `lscpu` – CPU architecture
-- `lsblk` – Block devices
+Basic Vim Workflow: Other insert commands:
 
-### Disk & File Management
+I → Insert at beginning of line
 
-- `df -h` – Disk usage
-- `du -sh` – Directory size
+a → Append after cursor
 
-### User Management
+o → Open new line below and insert
 
-```bash
-useradd username
-passwd username
-userdel username
-usermod -aG group username
-id username
-who
-```
+2. Exit Insert Mode
 
-### Permissions
+Press Esc
 
-```bash
-chmod 755 file
-chown user:group file
-ls -l
-umask
-```
+3. Save and Quit
 
-### Package Management
+ggVGy                Copy all
 
-```bash
-apt update
-apt upgrade
-apt install package
-apt remove package
-```
+1. Shell script to find no of line, characters and other functions
 
-### Services
+O/P:
 
-```bash
-systemctl status ssh
-systemctl restart apache2
-```
+Shell script to find kernal version, memory usage, running process, installed packages
 
-### Networking
+O/P:
 
-```bash
-ip a
-ping google.com
-ss -tuln
-nmap localhost
-curl http://example.com
-```
-
-### Logs
-
-```bash
-journalctl
-dmesg
-```
-
-### Cron & Scheduling
-
-```bash
-crontab -e
-at now + 1 minute
-```
-
-### Shutdown & Reboot
-
-```bash
-shutdown now
-reboot
-```
