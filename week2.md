@@ -80,44 +80,69 @@ root directory / - top of the file system
 | `/dev`    | Device files (e.g., `/dev/sda`)                |
 | `/proc`   | Virtual filesystem for process and kernel info |
 | `/boot`   | Boot loader files (e.g., kernel images)        |
+-\
+
+
+User management in Linux involves creating, modifying, and managing user accounts and groups to control access and permissions on the system.
+
+| Task            | Command                 |
+| --------------- | ----------------------- |
+| Add user        | `sudo adduser username` |
+| Delete user     | `sudo deluser username` |
+| Change password | `passwd username`       |
+| Modify user     | `usermod`               |
+| List users      | `cat /etc/passwd`       |
 
 
 ### 🧩 Key Linux User Management Commands
 
 #### Creating Users
 
-```bash
 sudo useradd -m -s /bin/bash username
 sudo adduser username
-```
 
 #### Modifying Users
 
-```bash
 sudo usermod -aG groupname username
-```
 
-#### Deleting Users
-
-```bash
+#### Deleting Users:
 sudo userdel username
-```
 
 #### Managing Passwords
 
-```bash
 sudo passwd username
 sudo passwd -l username   # Lock
 sudo passwd -u username   # Unlock
-```
 
 #### Managing Groups
 
-```bash
 sudo groupadd groupname
 sudo groupdel groupname
 sudo gpasswd -a username groupname
-```
+
+4. Permission Levels
+chmod 755 file.txt   # rwxr-xr-x
+chown user:group file.txt
+username – login name
+
+x – password (stored in /etc/shadow)
+
+UID – User ID
+
+GID – Group ID
+
+comment – optional (full name or description)
+
+home_directory – default login directory
+
+shell – default command shell
+
+/etc/shadow-
+encrypted passwords 
+/etc/group
+group information
+john:x:1001:1001:John Doe:/home/john:/bin/bash
+
 
 ---
 
