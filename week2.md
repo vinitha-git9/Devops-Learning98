@@ -66,6 +66,21 @@ A Linux distribution (or *distro*) is a complete operating system built around t
 ---
 
 ## Linux File System
+root directory / - top of the file system
+| Directory | Purpose                                        |
+| --------- | ---------------------------------------------- |
+| `/`       | Root of the file system                        |
+| `/bin`    | Essential user binaries (e.g., `ls`, `cp`)     |
+| `/sbin`   | System binaries (e.g., `init`, `reboot`)       |
+| `/etc`    | System configuration files                     |
+| `/home`   | User home directories                          |
+| `/var`    | Variable data like logs (`/var/log`)           |
+| `/usr`    | Secondary hierarchy: user apps and utilities   |
+| `/tmp`    | Temporary files                                |
+| `/dev`    | Device files (e.g., `/dev/sda`)                |
+| `/proc`   | Virtual filesystem for process and kernel info |
+| `/boot`   | Boot loader files (e.g., kernel images)        |
+
 
 ### 🧩 Key Linux User Management Commands
 
