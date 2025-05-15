@@ -16,10 +16,21 @@ Installed Ubuntu
 
 Installation of Monit and Supervisor:
 
+2. Install Monit:
+
 sudo apt install monit -y
+
+3. Enable and Start Monit
+
 sudo systemctl enable monit
 sudo systemctl start monit
+
+4. Check Monit status
+
 monit -V
+
+5. Monit Configuration File
+
 sudo nano /etc/monit/monitrc
 
 set httpd port 2812 and
@@ -44,5 +55,20 @@ autorestart=true
 stderr_logfile=/var/log/myapp.err.log
 stdout_logfile=/var/log/myapp.out.log
 
+sudo supervisorctl reread
+sudo supervisorctl update
+
+Configuration:
+sudo nano /etc/supervisor/conf.d/myprogram.conf
+
+Example:
+[program:myapp]
+command=/path/to/your/app
+autostart=true
+autorestart=true
+stderr_logfile=/var/log/myapp.err.log
+stdout_logfile=/var/log/myapp.out.log
+
+Reload:
 sudo supervisorctl reread
 sudo supervisorctl update
