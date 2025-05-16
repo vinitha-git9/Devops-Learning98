@@ -82,6 +82,13 @@ root directory / - top of the file system
 | `/boot`   | Boot loader files (e.g., kernel images)        |
 -\
 
+| File               | Purpose                                                                                   |
+| ------------------ | ----------------------------------------------------------------------------------------- |
+| **`/etc/passwd`**  | Stores basic user account information like username, UID, GID, home directory, and shell. |
+| **`/etc/shadow`**  | Stores encrypted user passwords and password expiration info (readable only by root).     |
+| **`/etc/group`**   | Stores group information (group names, GIDs, and group members).                          |
+| **`/etc/gshadow`** | Stores secure group information, including encrypted passwords for group access.          |
+
 
 User management in Linux involves creating, modifying, and managing user accounts and groups to control access and permissions on the system.
 
@@ -120,10 +127,54 @@ sudo groupadd groupname
 sudo groupdel groupname
 sudo gpasswd -a username groupname
 
+Linux Permission Levels
+
 4. Permission Levels
+
+| Symbol | Meaning     | For Files                    | For Directories                    |
+| ------ | ----------- | ---------------------------- | ---------------------------------- |
+| `r`    | **Read**    | View file content            | List directory contents            |
+| `w`    | **Write**   | Modify file content          | Add/delete files                   |
+| `x`    | **Execute** | Run file as a program/script | Access directory (enter with `cd`) |
+
+Viewiing permission:
+ls -l
+
+Breakdown:
+
+-rwxr-xr--
+
+- = regular file
+
+rwx = user has read, write, and execute
+
+r-x = group has read and execute
+
+r-- = others have read only
+
 chmod 755 file.txt   # rwxr-xr-x
 chown user:group file.txt
 username – login name
+
+Modes of Use:
+1. Symbolic Mode:
+
+   chmod u+x script.sh    # Add execute for user
+chmod g-w file.txt     # Remove write for group
+chmod o=r file.txt     # Set read only for others
+
+2. Numeric Mode
+chmod 755 script.sh
+
+Changing Ownership:
+chown alice:staff file.txt
+
+| Command | Purpose            |
+| ------- | ------------------ |
+| `ls -l` | View permissions   |
+| `chmod` | Change permissions |
+| `chown` | Change ownership   |
+| `chgrp` | Change group only  |
 
 x – password (stored in /etc/shadow)
 
@@ -174,31 +225,62 @@ umask 022
 ---
 
 ## Processes and Job Management
+Learn about the Process Details, Creation, Termination, and States in Linux
 
-### Viewing Processes
+Process Details:
 
-```bash
+A process is an instance of a running program.
+Each process has:PID – Process ID
+PPID – Parent Process ID
+UID – User ID of the process owner
+Command – The program being executed
 ps aux
-ps -ef
-ps -u username
 top
 htop
-```
+Process Creation: A new process is created using the fork() system call, which duplicates the parent process.
+The child process can then call exec() to replace itself with a new program.
+echo "Process id = $$"
+echo "Process id = $PPID"
+
+ Example:
+ sleep 60 &
+ o/p" # 3249
+ kill 3249
+ | Term     | Meaning                          |
+| -------- | -------------------------------- |
+| `fork()` | Creates a child process          |
+| `exec()` | Runs a new program in the child  |
+| `PID`    | Process ID                       |
+| `PPID`   | Parent Process ID                |
+| `wait()` | Parent waits for child to finish |
+| `exit()` | Process terminates               |
+
+📌 Process Termination:
+Process termination is the final stage of a process's lifecycle — when it stops running and its resources are released by the operating system.
+
+| Signal    | Number | Description                                        |
+| --------- | ------ | -------------------------------------------------- |
+| `SIGTERM` | 15     | Graceful termination                               |
+| `SIGKILL` | 9      | Forceful termination (cannot be caught or ignored) |
+| `SIGINT`  | 2      | Interrupt (e.g., Ctrl+C)                           |
+| `SIGQUIT` | 3      | Quit and dump core                                 |
 
 ### Process States
 
-- **Running**
-- **Sleeping**
-- **Stopped**
-- **Zombie**
+- **Running -R**
+- **Sleeping-- S
+- **Stopped - T
+- **Zombie - Z
+- Dead - x
 
-### Signals
+- | Concept         | Explanation                               |
+| --------------- | ----------------------------------------- |
+| `exit()`        | Normal termination                        |
+| `kill -9 <PID>` | Forcefully kills a process                |
+| `SIGTERM`       | Allows cleanup before termination         |
+| `SIGKILL`       | Immediately stops the process             |
+| `wait()`        | Cleans up after child process termination |
 
-- `SIGINT (2)`: Ctrl+C
-- `SIGTERM (15)`: Termination
-- `SIGKILL (9)`: Force kill
-- `SIGSTOP`: Pause
-- `SIGCONT`: Resume
 
 ### Job Control
 
