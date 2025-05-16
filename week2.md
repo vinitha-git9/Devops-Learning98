@@ -281,21 +281,55 @@ Process termination is the final stage of a process's lifecycle — when it stop
 | `SIGKILL`       | Immediately stops the process             |
 | `wait()`        | Cleans up after child process termination |
 
+Signals in Linux:
 
-### Job Control
+| Signal    | Code | Description                               |
+| --------- | ---- | ----------------------------------------- |
+| `SIGINT`  | `2`  | Interrupt from keyboard (`Ctrl+C`)        |
+| `SIGTSTP` | `20` | Stop signal from keyboard (`Ctrl+Z`)      |
+| `SIGKILL` | `9`  | Immediately terminate (cannot be ignored) |
+| `SIGTERM` | `15` | Graceful termination request              |
+| `SIGHUP`  | `1`  | Hangup signal (terminal closed)           |
+| `SIGCONT` | `18` | Continue a stopped process                |
 
-```bash
-bg       # background
-fg       # foreground
-jobs     # list
-kill PID
-Ctrl+Z   # suspend
-Ctrl+C   # terminate
-```
+Sending Signals:
 
----
+Using kill command:
 
-## Package Management
+kill -SIGTERM <PID>
+kill -9 <PID>        # Force kill
+kill -SIGCONT <PID>  # Resume a stopped process
+
+
+| Key Combo | Signal Sent | Effect                                 |
+| --------- | ----------- | -------------------------------------- |
+| `Ctrl+C`  | `SIGINT`    | Interrupt/kill the process             |
+| `Ctrl+Z`  | `SIGTSTP`   | Pause/stop the process                 |
+| `fg`      | `SIGCONT`   | Resume a stopped process in foreground |
+
+### Job Control:
+Job control lets you manage multiple processes (jobs) in a single terminal session.
+
+| State      | Description                              |
+| ---------- | ---------------------------------------- |
+| Running    | Actively executing                       |
+| Stopped    | Suspended (e.g., with `Ctrl+Z`)          |
+| Background | Running in background (`&`)              |
+| Foreground | Running and tied to the current terminal |
+
+| Command   | Description                       |
+| --------- | --------------------------------- |
+| `jobs`    | List current jobs                 |
+| `bg`      | Resume a job in the background    |
+| `fg`      | Resume a job in the foreground    |
+| `kill %1` | Kill job number 1                 |
+| `disown`  | Remove a job from shell job table |
+
+Learn about the software distribution, package repositories and dependencies:
+
+Linux distros use package managers to handle software and dependencies.
+
+Repositories are sources of software packages.
 
 ### Software Distribution
 
@@ -309,7 +343,6 @@ Ctrl+C   # terminate
 
 - Required libraries that are automatically resolved during installation.
 
----
 
 ## File and Directory Management
 
@@ -364,7 +397,57 @@ wget http://example.com
 - The **init system** is the first process (PID 1).
 - It initializes system services, manages targets/runlevels, and handles shutdown.
 
----
+Functions of the Init System:
+1.Runs scripts and services
+2.Starts, stops, restarts, and monitors services
+3.Properly stops services during shutdown
+
+| Init System  | Description                                                  | Used In                                            |
+| ------------ | ------------------------------------------------------------ | -------------------------------------------------- |
+| **SysVinit** | Traditional init system using numbered runlevels and scripts | Older distros (Debian, RHEL 6)                     |
+| **Upstart**  | Event-driven replacement for SysV                            | Ubuntu (pre-15.04)                                 |
+| **systemd**  | Modern init system and service manager                       | Most current distros (Ubuntu 16+, RHEL 7+, Fedora) |
+| **OpenRC**   | Lightweight, used in Alpine Linux and Gentoo                 | Lightweight systems                                |
+
+systemd is the most common init system today.
+
+systemctl status
+sudo systemctl start nginx
+sudo systemctl stop nginx
+sudo systemctl enable ssh
+
+Resource monitoring means checking and analyzing how your system's hardware and processes are being used.
+Process monitoring:A process is any running program
+Which programs are running
+How much CPU or memory they are using
+Whether they are active, sleeping, or stuck
+
+ps — snapshot of processes
+top or htop — live, interactive view
+pstree — shows parent-child process relationships
+
+CPU Monitoring:
+% of CPU used by user apps and the system
+Idle time
+Load on each core
+
+top, htop
+mpstat (from sysstat)
+uptime (load average)
+
+Memory Monitoring:
+Total, used, and free memory
+Swap usage (when RAM runs out)
+Which processes are using the most memory
+ Tools:
+
+free -h
+
+top, htop
+
+vmstat
+A thread is a lightweight part of a process. One process can have many threads doing different tasks at once
+
 
 ## Log Files in `/var/log`
 
