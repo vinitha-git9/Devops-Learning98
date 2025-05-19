@@ -14,30 +14,43 @@ Difference b/w Monit and Supervisor:
 
 Installed Ubuntu
 
-Installation of Monit and Supervisor:
+Installation of Monit:
 
-2. Install Monit:
-
-sudo apt install monit -y
-
-3. Enable and Start Monit
-
+sudo yum install epel release
+sudo yum install monit -y
 sudo systemctl enable monit
-sudo systemctl start monit
+sudo systemctl status monit
+monit -v
 
-4. Check Monit status
+Monit Configuration:
 
-monit -V
+cd /etc
+vi monitrc
 
-5. Monit Configuration File
-
-sudo nano /etc/monit/monitrc
-
-set httpd port 2812 and
-    use address localhost
+"set httpd port 2812 and
+    use address 127.0.0.1
     allow localhost
+allow admin:monit
+
+check process nginx with pidfile /run/nginx.pid
+start prpgram= "/usr/sbin/service nginx start"
+stop program = "/usr/sbin/servive nginx stop"
+if failed 127.0.0.1 port 80 protocol http for 3 cycles then restart
+
+set mailserver smtp.gmail.com port 587
+username = "vinitha@gmail.com" password= "vini@5298"
+using tls
+
+check process vsftpd matching "vsftpd"
+start program = "/usr/sbin/service vsftpd start"
+stop program = "/usr/sbin/service vsftpd stop"
+if failed port 21 protocol ftp then alert
 
 sudo monit reload
+sudo monit status
+
+Open local web browser--> enter http://127.0.0.0:2812
+
 
 
 Supervisor:
