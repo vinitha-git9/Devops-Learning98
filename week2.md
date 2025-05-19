@@ -69,17 +69,17 @@ A Linux distribution (or *distro*) is a complete operating system built around t
 root directory / - top of the file system
 | Directory | Purpose                                        |
 | --------- | ---------------------------------------------- |
-| `/`       | Root of the file system                        |
-| `/bin`    | Essential user binaries (e.g., `ls`, `cp`)     |
-| `/sbin`   | System binaries (e.g., `init`, `reboot`)       |
-| `/etc`    | System configuration files                     |
-| `/home`   | User home directories                          |
-| `/var`    | Variable data like logs (`/var/log`)           |
-| `/usr`    | Secondary hierarchy: user apps and utilities   |
-| `/tmp`    | Temporary files                                |
-| `/dev`    | Device files (e.g., `/dev/sda`)                |
-| `/proc`   | Virtual filesystem for process and kernel info |
-| `/boot`   | Boot loader files (e.g., kernel images)        |
+| `/`       | Root of the file system                        |cd / puts you at the very top level,
+| `/bin`    | Essential user binaries (e.g., `ls`, `cp`)     | and contains essential user command binaries (ls,cp,mv,rm,bash,echo)
+| `/sbin`   | System binaries (e.g., `init`, `reboot`)       |contains essential system administration programs that are typically used by the superuser (ip,ipconfig,init,fsck)
+| `/etc`    | System configuration files                     |contains system-wide configuration files and shell scripts used to boot(passwd,shadow,host, hostaname
+| `/home`   | User home directories                          |contains user home directories(/home/alice , /home/henna)
+| `/var`    | Variable data like logs (`/var/log`)           |like logs, mail, databases, and temporary data for running services(log,mail,lib,tmp)
+| `/usr`    | Secondary hierarchy: user apps and utilities   |non-essential) system files ,not needed for basic system boot or repair.
+| `/tmp`    | Temporary files                                |Provides temporary storage for:
+| `/dev`    | Device files (e.g., `/dev/sda`)                |contains device files.that represent hardware devices and virtual devices
+| `/proc`   | Virtual filesystem for process and kernel info |Used by system utilities like top, ps, uptime, and free to gather system stats.
+| `/boot`   | Boot loader files (e.g., kernel images)        |contains static files needed to boot the operating system.
 -\
 
 | File               | Purpose                                                                                   |
