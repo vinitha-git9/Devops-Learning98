@@ -221,8 +221,11 @@ chmod 755 file
 chown user:group file
 umask 022
 ```
+If you only want to change the user, you can do
+chown alice report.txt
 
----
+If you only want to change the group, use a colon with no user:
+chown :developers report.txt
 
 ## Processes and Job Management
 Learn about the Process Details, Creation, Termination, and States in Linux
