@@ -24,13 +24,15 @@ monit -v
 
 Monit Configuration:
 
-cd /etc
-vi monitrc
+cd /etc/monit
+nano monitrc
 
-"set httpd port 2812 and
+set httpd port 2812 and
     use address 127.0.0.1
-    allow localhost
+    #allow localhost
 allow admin:monit
+
+Open local web browser--> enter http://127.0.0.0:2812
 
 check process nginx with pidfile /run/nginx.pid
 start prpgram= "/usr/sbin/service nginx start"
@@ -38,50 +40,66 @@ stop program = "/usr/sbin/servive nginx stop"
 if failed 127.0.0.1 port 80 protocol http for 3 cycles then restart
 
 set mailserver smtp.gmail.com port 587
-username = "vinitha@gmail.com" password= "vini@5298"
+username = "vinitharaja@gmail.com" password= "app password"
 using tls
 
-check process vsftpd matching "vsftpd"
-start program = "/usr/sbin/service vsftpd start"
-stop program = "/usr/sbin/service vsftpd stop"
-if failed port 21 protocol ftp then alert
-
+sudo monit -t
 sudo monit reload
 sudo monit status
 
+To find the Nginx status:
+systemctl status nginx
+
+To sent alert to mail:
+systemctl stop nginx
+
+check mail
+
 Open local web browser--> enter http://127.0.0.0:2812
 
+SUPERVISOR:
 
+python app install:
+cd /
+apt install python3
 
-Supervisor:
+mkdir ~/pyapp
+cd ~/pyapp
+nano app.py
+
+# app.py
+import time
+
+while True:
+    print("Python app is running...")
+    time.sleep(5)
+
+Install nodeapp also and create index.fs
+ 
+sudo nano /etc/supervisor/conf.d/pyapp.conf
+
+[program:pyapp]
+command=/usr/bin/python3 /pyapp/app.py
+autostart=true
+autorestart=true
+user=root
+stdout_logfile=/var/log/pyapp.out.log
+stderr_logfile=/var/log/pyapp.err.log
+
+sudo nano /etc/supervisor/conf.d/nodeapp.conf
+
+[program:nodeapp]
+command=/usr/bin/node /nodeapp/index.js
+autostart=true
+autorestart=true
+stderr_logfile=/var/log/nodeapp/nodeapp.err.log
+stdout_logfile=/var/log/nodeapp/nodeapp.out.log
+
 sudo apt install supervisor -y
 sudo systemctl enable supervisor
 sudo systemctl start supervisor
 supervisord -v
-sudo nano /etc/supervisor/conf.d/myapp.conf
-
-
-[program:myapp]
-command=/usr/bin/python3 /opt/myapp/app.py
-autostart=true
-autorestart=true
-stderr_logfile=/var/log/myapp.err.log
-stdout_logfile=/var/log/myapp.out.log
 
 sudo supervisorctl reread
 sudo supervisorctl update
 
-Configuration:
-sudo nano /etc/supervisor/conf.d/myprogram.conf
-
-Example:
-[program:myapp]
-command=/path/to/your/app
-autostart=true
-autorestart=true
-stderr_logfile=/var/log/myapp.err.log
-stdout_logfile=/var/log/myapp.out.log
-
-Reload:
-sudo supervisorctl reread
-sudo supervisorctl update
