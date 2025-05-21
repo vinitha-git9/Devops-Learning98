@@ -1,4 +1,5 @@
 
+
 Difference b/w Monit and Supervisor:
 
 | Feature            | **Monit**                            | **Supervisor**                         |
@@ -149,3 +150,53 @@ Shutdown complete. Exiting.
 
 ✅ Under Supervisor
 sudo supervisorctl stop pyapp
+
+EVENT LISTENER:
+In Python, event listeners are used to respond to specific events, such as user input, network activity, signals, or other triggers.
+Python doesn’t have a built-in event system like JavaScript, but you can implement event-driven behavior using libraries or your own custom logic.
+
+cd /etc/pyapp
+nano app.py
+
+✅ 1. Simple Custom Event Listener (Basic Pattern)
+
+class EventEmitter:
+    def __init__(self):
+        self.listeners = {}
+
+    def on(self, event, callback):
+        if event not in self.listeners:
+            self.listeners[event] = []
+        self.listeners[event].append(callback)
+
+    def emit(self, event, *args, **kwargs):
+        for callback in self.listeners.get(event, []):
+            callback(*args, **kwargs)
+
+# Example usage
+emitter = EventEmitter()
+
+def on_shutdown():
+    print("Shutting down...")
+
+emitter.on('shutdown', on_shutdown)
+
+# Later in your code
+emitter.emit('shutdown')
+
+run: Python3 app.py
+
+shutting down
+| Feature                | **Systemd**                       | **Supervisor**                   | **Monit**                      |
+| ---------------------- | --------------------------------- | -------------------------------- | ------------------------------ |
+| Primary Use            | Init system, service management   | Process supervision              | Process & system monitoring    |
+| Auto-Restart           | ✅ Yes                             | ✅ Yes                            | ✅ Yes                          |
+| Process Monitoring     | 🚫 (basic only)                   | ✅ Good                           | ✅ Advanced                     |
+| System Resource Checks | ❌                                 | ❌                                | ✅ (CPU, RAM, disk, etc.)       |
+| Email Alerts           | ❌                                 | ❌                                | ✅ Yes                          |
+| Web Interface          | ❌                                 | ❌                                | ✅ Yes                          |
+| Logs                   | `journalctl`                      | stdout/stderr to log files       | Custom log paths               |
+| Configuration Style    | Declarative `.service` files      | INI-style `.conf` files          | Custom `.monitrc` or snippets  |
+| Daemon Required        | Yes (part of OS)                  | Yes (supervisord)                | Yes (monit daemon)             |
+| Boot Management        | ✅ Excellent (`enable`, `disable`) | ❌ (manual or via cron/systemd)   | ❌ (needs to be added manually) |
+| Use Case               | OS services, system boot          | Python, Node.js, background apps | Monitoring and auto-healing    |
