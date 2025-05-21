@@ -1,4 +1,5 @@
-
+A daemon is just a background program that provides services or watches your system. 
+Tools like Monit, Supervisor, cron, or sshd all run as daemons.
 
 Difference b/w Monit and Supervisor:
 
@@ -200,3 +201,43 @@ shutting down
 | Daemon Required        | Yes (part of OS)                  | Yes (supervisord)                | Yes (monit daemon)             |
 | Boot Management        | ✅ Excellent (`enable`, `disable`) | ❌ (manual or via cron/systemd)   | ❌ (needs to be added manually) |
 | Use Case               | OS services, system boot          | Python, Node.js, background apps | Monitoring and auto-healing    |
+
+Configure & Monitor a process with Supervisor/Monit and start this process at system startup:
+
+sudo nano /etc/monit/conf-enabled/myapp
+
+check process myapp
+    matching "app.py"
+    start program = "/usr/bin/python3 /home/ubuntu/myapp/app.py"
+    stop program = "/usr/bin/pkill -f /home/ubuntu/myapp/app.py"
+    if not exist then restart
+
+Configure Supervisor/Monit to send  mail alerts on higher resource usage (CPU, Memory, Disk):
+
+cd /etc/monit
+nano monitrc
+
+set daemon 60            # Check every 60 seconds
+set logfile /var/log/monit.log
+
+set mailserver smtp.gmail.com port 587
+    username "your_email@gmail.com" password "your_app_password"
+    using tlsv12
+
+set alert your_email@gmail.com
+
+check system localhost
+    if loadavg (1min) > 4 then alert
+    if memory usage > 75% then alert
+    if cpu usage (user) > 70% then alert
+
+check filesystem rootfs with path /
+    if space usage > 85% then alert
+
+set httpd port 2812 and
+    use address localhost
+    allow localhost
+
+monit -t
+monit reload
+monit status
