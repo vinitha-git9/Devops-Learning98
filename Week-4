@@ -22,7 +22,9 @@ sudo systemctl enable monit
 sudo systemctl status monit
 monit -v
 
-Monit Configuration:
+Configuration:
+
+To monit NGINX service:
 
 cd /etc/monit
 nano monitrc
@@ -103,3 +105,6 @@ supervisord -v
 sudo supervisorctl reread
 sudo supervisorctl update
 
+
+sudo supervisorctl status pyapp
+sudo supervisorctl status nodeapp
