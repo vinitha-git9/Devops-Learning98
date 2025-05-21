@@ -108,3 +108,44 @@ sudo supervisorctl update
 
 sudo supervisorctl status pyapp
 sudo supervisorctl status nodeapp
+
+Graceful shutdown:
+To implement graceful shutdown in a Python app (especially one run by Supervisor), you need to handle termination signals like SIGTERM and SIGINT. This lets your app clean up resources before exiting.
+
+
+Graceful Shutdown in Python:
+
+cd /etc/pyapp
+nano app.py
+ 
+import time
+import signal
+import sys
+
+running = True
+
+def handle_exit(signum, frame):
+    global running
+    print("\nReceived termination signal. Cleaning up...")
+    running = False
+
+# Handle Ctrl+C and Supervisor stop
+signal.signal(signal.SIGINT, handle_exit)
+signal.signal(signal.SIGTERM, handle_exit)
+
+print("Python app started.")
+while running:
+    print("Python app is running...")
+    time.sleep(5)
+
+print("Shutdown complete. Exiting.")
+
+Manual run:
+python3 app.py
+
+Press Ctrl+C → You’ll see:
+Received termination signal. Cleaning up...
+Shutdown complete. Exiting.
+
+✅ Under Supervisor
+sudo supervisorctl stop pyapp
