@@ -86,6 +86,7 @@ Layer 3: Wrong IP address
 Layer 4: Port blocked by firewall
 Layer 7: Web app not responding
 
+All Transmissions Involve Networks
 
 🌐 TCP/IP Model (4 Layers)
 | **TCP/IP Layer**      | **Description**                           | **Similar OSI Layers** | **Key Protocols**    |
@@ -118,3 +119,30 @@ Basic Network Troubleshooting Steps:
 8.flush dns cache
 9.check router/isp
 10.advanced tool
+
+PRINCE-WAD:
+
+| **Letter** | **Stands For**             | **What to Do**                                    |
+| ---------- | -------------------------- | ------------------------------------------------- |
+| **P**      | **Power & Physical**       | Check cables, power, router lights                |
+| **R**      | **Restart Devices**        | Restart your computer and network devices         |
+| **I**      | **IP Address Check**       | Use `ipconfig` / `ip a` to confirm valid IP       |
+| **N**      | **Network Adapter**        | Make sure Wi-Fi or Ethernet adapter is enabled    |
+| **C**      | **Connectivity Test**      | Ping `8.8.8.8` and `google.com`                   |
+| **E**      | **Examine DNS**            | Try different DNS (8.8.8.8, 1.1.1.1), flush cache |
+| **W**      | **Wi-Fi & Wired Settings** | Check if you’re on the correct network            |
+| **A**      | **Antivirus/Firewall**     | Temporarily disable to test if they’re blocking   |
+| **D**      | **Device or ISP Issue**    | Check other devices or contact your ISP           |
+
+P – Plugged in? Power OK?
+R – Reboot everything!
+I – IP valid?
+N – Network adapter enabled?
+C – Can you ping?
+E – Edit DNS?
+W – Wi-Fi connected?
+A – Antivirus blocking?
+D – Down ISP?
+
+DNS is like the phonebook of the internet.
+It translates human-friendly domain names (like google.com) into IP addresses (like 142.250.190.78) that computers use to talk to each other.
