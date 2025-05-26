@@ -196,3 +196,49 @@ How to View HTTP Headers:
 Browser Dev Tools: Open Dev Tools (F12) → Network tab → Click a request → Headers
 
 curl -I https://example.com
+
+Protocol is a set of rules that define how the data is formatted, transmitted and received over the network.
+Without protocol, computer wont understand eachother.
+Consider protocol like a agreement , where computer follow to commnunicate reliably.
+
+
+Categories of Protocol:
+
+Communication Protocol:
+
+| Protocol         | Description                                        |
+| ---------------- | -------------------------------------------------- |
+| **HTTP/HTTPS**   | Transfers web data. HTTPS is secure using SSL/TLS. |
+| **FTP/SFTP**     | File transfer protocol (SFTP is secure).           |
+| **SMTP**         | Sends emails.                                      |
+| **IMAP/POP3**    | Receives emails.                                   |
+| **Telnet / SSH** | Remote login protocols (SSH is secure).            |
+
+Internet Protocol:
+| Layer              | Protocols       | Description                       |
+| ------------------ | --------------- | --------------------------------- |
+| **Application**    | HTTP, FTP, SMTP | User-facing services              |
+| **Transport**      | TCP, UDP        | Reliable/unreliable data transfer |
+| **Internet**       | IP, ICMP        | Routing and addressing            |
+| **Network Access** | Ethernet, Wi-Fi | Physical data transfer            |
+
+
+network Protocol:
+| Protocol                                | Purpose                                     |
+| --------------------------------------- | ------------------------------------------- |
+| **IP (IPv4/IPv6)**                      | Assigns addresses and routes packets.       |
+| **TCP (Transmission Control Protocol)** | Ensures reliable delivery.                  |
+| **UDP (User Datagram Protocol)**        | Fast, connectionless transmission.          |
+| **ICMP**                                | Sends error/report messages (e.g., `ping`). |
+| **ARP**                                 | Maps IP addresses to MAC addresses.         |
+| **DHCP**                                | Automatically assigns IP addresses.         |
+| **DNS**                                 | Converts domain names to IP addresses.      |
+
+4. Security Protocols
+
+| Protocol    | Purpose                                      |
+| ----------- | -------------------------------------------- |
+| **SSL/TLS** | Encrypts data over networks (used in HTTPS). |
+| **IPSec**   | Secures IP communications.                   |
+| **HTTPS**   | Secure HTTP (web encryption).                |
+| **SSH**     | Secure remote login.                         |
