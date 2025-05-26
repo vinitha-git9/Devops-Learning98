@@ -38,12 +38,14 @@ Encrypted communication begins.
 
 🔹 Why Are Web Servers Required?
 
-1.Host websites and appilcation(Web servers store your website files (HTML, CSS, JS, images, etc.).)
+1.Host websites and application(Web servers store your website files (HTML, CSS, JS, images, etc.).)
 2.serve content over the web(This is usually done via HTTP or HTTPS protocols.)
 3.handle user requests(It then sends the correct data back to the user.)
 4.supports security and authentication(With HTTPS, web servers ensure secure, encrypted communication.)
 5.Enable online service(simple blogs to complex apps like online shopping, social media, or email.)
 6.serve APi's and backend logic(Web servers often run backend scripts (like PHP, Python, Node.js) to handle database queries, form submissions, etc.)
+
+
 
 
 
