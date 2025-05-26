@@ -10,6 +10,22 @@ WLAN (Wireless LAN)LAN that uses Wi-Fi
 VPN (Virtual Private Network): Creates a secure connection over the internet
 
 IP Address (Internet Protocol):Like a home address, but for devices.Every device on a network has one
+
+IP stands for Internet Protocol.
+It is a set of rules that govern how data is sent and received over the internet or any network.
+Each device on a network is assigned a unique IP address.
+
+Types of IP Addresses:
+
+| Type       | Version | Visibility     | Assigned By       | Example      |
+| ---------- | ------- | -------------- | ----------------- | ------------ |
+| IPv4       | IPv4    | Public/Private | ISP/Admin         | 192.168.1.1  |
+| IPv6       | IPv6    | Public/Private | ISP/Admin         | 2001\:db8::1 |
+| Public IP  | Either  | Public         | ISP               | 203.0.113.5  |
+| Private IP | Either  | Local only     | Router (DHCP)     | 192.168.0.10 |
+| Static IP  | Either  | Either         | Manually set      | Varies       |
+| Dynamic IP | Either  | Either         | Automatically set | Varies       |
+
 Router: Directs traffic between your local network and the Internet.
 Switch: Connects devices within a network (like PCs, printers).
 Modem: Connects your home network to your Internet provider.
@@ -135,7 +151,7 @@ PRINCE-WAD:
 | **D**      | **Device or ISP Issue**    | Check other devices or contact your ISP           |
 
 P – Plugged in? Power OK?
-R – Reboot everything!
+R – Reboot everything!.
 I – IP valid?
 N – Network adapter enabled?
 C – Can you ping?
@@ -146,3 +162,37 @@ D – Down ISP?
 
 DNS is like the phonebook of the internet.
 It translates human-friendly domain names (like google.com) into IP addresses (like 142.250.190.78) that computers use to talk to each other.
+
+IP stands for Internet Protocol.
+It is a set of rules that govern how data is sent and received over the internet or any network.
+Each device on a network is assigned a unique IP address.
+
+How DNS Works (Simplified):
+
+You type www.example.com into your browser.
+The DNS resolver checks its cache for the IP. If not found:
+It asks a root DNS server, then a TLD server, then the authoritative DNS server for example.com.
+The resolver gets the IP address and sends it to your browser.
+The browser connects to the server at that IP and loads the website.
+
+HTTP Headers:
+Http headers is the set of metadata in the http request or response. 
+It defines how the data is tranfered between the client and the server.
+Headers give extra information such as content type, authentication details, caching instructions, and more.
+
+Structure of an HTTP Header:
+Header-Name: Header-Value
+
+Categories of HTTP Headers:
+
+General Headers:
+Response headers:
+Request Headers:
+security headers:
+Entity headers:
+
+How to View HTTP Headers:
+
+Browser Dev Tools: Open Dev Tools (F12) → Network tab → Click a request → Headers
+
+curl -I https://example.com
