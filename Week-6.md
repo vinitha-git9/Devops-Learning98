@@ -40,3 +40,122 @@ mod_php – Enables PHP processing
 Apache Configuration Files:
 /etc/httpd/conf/httpd.conf (Red Hat/CentOS)
 /etc/apache2/apache2.conf (Ubuntu/Debian)
+
+Nginx:
+
+NGINX (pronounced "engine-x") is:
+A high-performance web server that can also act as a reverse proxy, load balancer, and HTTP cache.
+It’s widely used by websites to serve content quickly, securely, and reliably.
+
+What Nginx do?
+| Function               | Explanation                                                         |
+| ---------------------- | ------------------------------------------------------------------- |
+| 🌍 **Web Server**      | Shows websites to users (serves HTML, CSS, images, etc.)            |
+| 🔁 **Reverse Proxy**   | Passes client requests to backend servers (like Node.js, PHP, etc.) |
+| ⚖️ **Load Balancer**   | Spreads traffic across multiple servers to avoid overload           |
+| 🗂️ **Static Server**  | Efficiently serves static files (images, HTML)                      |
+| 🔐 **SSL Termination** | Handles HTTPS connections (secure)                                  |
+
+How Nginx works:
+
+User’s Browser
+     ↓
+   NGINX (Port 80/443)
+     ↓
+  Your App (e.g. Node.js on Port 3000)
+
+NGINX Configuration Basics:
+Main config file (Linux):
+📍 /etc/nginx/nginx.conf
+Site-specific config:
+📍 /etc/nginx/sites-available/your-site+
+
+🔍 Where NGINX Is Used
+Netflix
+GitHub
+Dropbox
+WordPress.com
+Instagram
+
+An Application Server is a program that runs your web application code (like Python, Node.js, PHP, Java, etc.) and handles dynamic content — like logins, form submissions, or database queries.
+It does not serve static files like images or HTML pages — that’s what NGINX does best.
+
+User visits https://example.com/login
+NGINX receives the request
+NGINX sends the request to the app server (on port 3000, for example)
+The app server processes the login (checks username/password from the database)
+Sends back a response to NGINX
+NGINX returns the response to the user's browser
+
+Diagram:
+
+Browser (User)
+     ↓
+NGINX (Reverse Proxy & Web Server)
+     ↓
+App Server (e.g., Node.js, Flask, PHP)
+     ↓
+Database (e.g., MySQL, MongoDB)
+
+The App Server runs your actual application.
+NGINX sits in front of it and handles the traffic, security, and performance.
+
+
+SSL stands for Secure Sockets Layer (now technically called TLS, but most people still say "SSL").
+
+An SSL certificate is a digital certificate that:
+
+✅ Confirms your website’s identity
+✅ Encrypts the data sent between the browser and your server
+
+ What It Looks Like
+With SSL (HTTPS):
+https://example.com 🔒 Lock icon in browser
+
+Without SSL (HTTP):
+http://example.com ❌ "Not secure" warning
+
+
+Install and config Nginx to run a static web page:
+
+cd /var/www/html  --- mkdir mywebsite
+nano index.html
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Static Website</title>
+</head>
+<body>
+  <h1>Hello from NGINX static site!</h1>
+</body>
+</html>
+
+sudo chmod -R 755 /var/www/html/mywebsite
+
+Create NGINX Server Block (Config):
+
+sudo nano /etc/nginx/sites-available/mywebsite
+server {
+    listen 80;
+    server_name localhost;
+
+    root /var/www/mywebsite;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+
+sudo ln -s /etc/nginx/sites-available/mywebsite /etc/nginx/sites-enabled/
+
+sudo nginx -t
+sudo systemctl reload nginx
+
+
+On local machine:
+http://localhost
+
+O/P:
+Hello from NGINX static site!
