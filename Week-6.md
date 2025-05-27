@@ -1,51 +1,42 @@
 Web Server:
+A web server is a system that delivers web content (like websites, images, and videos) to users over the internet.
 
--> A web server is the software ( sometimes a hardware) that
-  .stores website files(html,css,javascript etc)
-  .serves them to users over the internet when requested by the browser.
-  .hnadles request using HTTP or HTTPS protocol
- 
-Hardware: A physical or virtual machine that stores web server software and website data (HTML, CSS, JS, images, etc.).
+Webserver components:
 
-Software: The web server application that handles HTTP requests. Popular examples include:
-.> Nginx
-.>Apache
-.>Microsoft IIS
-.>Litespeed
+Request handler: Apache HTTP, Nginx, Microsoft IIS, litespeed
+Intrepeter: PHP, java,perl
+Stroage: Oracle, Mysql
 
-When a user accesses a website via a browser, the browser sends an HTTP(S) request to the web server. 
-The server processes the request and returns the appropriate response (e.g., a web page).
+Client ---> browser ---> data ---> encryption /decryption ---> session occurs ---> data convert to segments ---> segments to packet --->then converted to frame ---> then converted to bits ---> sent as signals over the network --->  connected to webserver -- request is handled by apache/Nginx -- fetch the indexfile from filestorage -- then interpret the file -- > fetch the data from database ---->  delivered the data to client.
 
-HTTP vs HTTPS:
+HTTP/HTTPS:
 
 HTTP: Data sent in plaintext. Vulnerable to eavesdropping and man-in-the-middle attacks.
+HTTPS stands for HyperText Transfer Protocol Secure. It is the secure version of HTTP, the protocol used for transferring data over the web
 
-HTTPS (HTTP Secure): Encrypts data using TLS (Transport Layer Security). Ensures:
-It encrypt the communication between the browser and the server to protect against:
-Eavesdropping
-Data tampering
-Man-in-the-middle attacks
+How HTTP/HTTPS Fit Into a Web Server:
 
-How HTTPS Works (Simplified)
+User types a URL or clicks a link ----> The browser sends an HTTP or HTTPS request to the web server ---> Web Server Software Receives Request 
+---- The web server (like Apache or Nginx) listens on:Port 80 for HTTP,Port 443 for HTTPS ----> It processes the request and decides:
+What file or script to serve --> Whether to run server-side code (e.g., PHP)----> Whether to communicate with a database
 
-Browser connects to the server via HTTPS.
-Server presents its SSL/TLS certificate to prove its identity.
-Browser verifies the certificate using a Certificate Authority (CA).
-TLS handshake occurs:
-They agree on encryption methods.
-They exchange keys securely.
-Encrypted communication begins.
+3. If Using HTTPS (Secure)
+The server and browser perform an SSL/TLS handshake:
 
-🔹 Why Are Web Servers Required?
+Apache (short for Apache HTTP Server):
+is one of the most widely used open-source web server software applications in the world. It allows you to host websites and web applications on the internet.
 
-1.Host websites and application(Web servers store your website files (HTML, CSS, JS, images, etc.).)
-2.serve content over the web(This is usually done via HTTP or HTTPS protocols.)
-3.handle user requests(It then sends the correct data back to the user.)
-4.supports security and authentication(With HTTPS, web servers ensure secure, encrypted communication.)
-5.Enable online service(simple blogs to complex apps like online shopping, social media, or email.)
-6.serve APi's and backend logic(Web servers often run backend scripts (like PHP, Python, Node.js) to handle database queries, form submissions, etc.)
+🔧 What Apache Does
+...>Receives requests from clients (usually web browsers)
+...>Serves content like HTML files, images, and videos
+....>Can run dynamic content (PHP, Python, etc.) using modules
+.....>Supports virtual hosting (multiple websites on one server)
 
+Apache Modules:
+mod_ssl – Enables HTTPS support
+mod_rewrite – Allows URL rewriting
+mod_php – Enables PHP processing
 
-
-
-
+Apache Configuration Files:
+/etc/httpd/conf/httpd.conf (Red Hat/CentOS)
+/etc/apache2/apache2.conf (Ubuntu/Debian)
