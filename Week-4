@@ -69,9 +69,9 @@ apt install python3
 
 mkdir ~/pyapp
 cd ~/pyapp
-nano app.py
+nano myapp.py
 
-# app.py
+# myapp.py
 import time
 
 while True:
@@ -83,10 +83,9 @@ Install nodeapp also and create index.fs
 sudo nano /etc/supervisor/conf.d/pyapp.conf
 
 [program:pyapp]
-command=/usr/bin/python3 /pyapp/app.py
+command=/usr/bin/python3 /home/vboxuser/pyapp/myapp.py
 autostart=true
 autorestart=true
-user=root
 stdout_logfile=/var/log/pyapp.out.log
 stderr_logfile=/var/log/pyapp.err.log
 
