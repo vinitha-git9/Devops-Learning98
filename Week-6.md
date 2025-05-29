@@ -1,141 +1,151 @@
-Web Server:
+# 🌐 Web Server & App Server Guide
+
+## 📡 Web Server
+
 A web server is a system that delivers web content (like websites, images, and videos) to users over the internet.
 
-Webserver components:
+### Components of a Web Server:
 
-Request handler: Apache HTTP, Nginx, Microsoft IIS, litespeed
-Intrepeter: PHP, java,perl
-Stroage: Oracle, Mysql
+- **Request Handler:** Apache HTTP, Nginx, Microsoft IIS, LiteSpeed  
+- **Interpreter:** PHP, Java, Perl  
+- **Storage:** Oracle, MySQL  
 
-Client ---> browser ---> data ---> encryption /decryption ---> session occurs ---> data convert to segments ---> segments to packet --->then converted to frame ---> then converted to bits ---> sent as signals over the network --->  connected to webserver -- request is handled by apache/Nginx -- fetch the indexfile from filestorage -- then interpret the file -- > fetch the data from database ---->  delivered the data to client.
+### Request Flow:
 
-HTTP/HTTPS:
-
-HTTP: Data sent in plaintext. Vulnerable to eavesdropping and man-in-the-middle attacks.
-HTTPS stands for HyperText Transfer Protocol Secure. It is the secure version of HTTP, the protocol used for transferring data over the web
-
-How HTTP/HTTPS Fit Into a Web Server:
-
-User types a URL or clicks a link ----> The browser sends an HTTP or HTTPS request to the web server ---> Web Server Software Receives Request 
----- The web server (like Apache or Nginx) listens on:Port 80 for HTTP,Port 443 for HTTPS ----> It processes the request and decides:
-What file or script to serve --> Whether to run server-side code (e.g., PHP)----> Whether to communicate with a database
-
-3. If Using HTTPS (Secure)
-The server and browser perform an SSL/TLS handshake:
-
-Apache (short for Apache HTTP Server):
-is one of the most widely used open-source web server software applications in the world. It allows you to host websites and web applications on the internet.
-
-🔧 What Apache Does
-...>Receives requests from clients (usually web browsers)
-...>Serves content like HTML files, images, and videos
-....>Can run dynamic content (PHP, Python, etc.) using modules
-.....>Supports virtual hosting (multiple websites on one server)
-
-Apache Modules:
-mod_ssl – Enables HTTPS support
-mod_rewrite – Allows URL rewriting
-mod_php – Enables PHP processing
-
-Apache Configuration Files:
-/etc/httpd/conf/httpd.conf (Red Hat/CentOS)
-/etc/apache2/apache2.conf (Ubuntu/Debian)
-
-Nginx:
-
-NGINX (pronounced "engine-x") is:
-A high-performance web server that can also act as a reverse proxy, load balancer, and HTTP cache.
-It’s widely used by websites to serve content quickly, securely, and reliably.
-
-What Nginx do?
-| Function               | Explanation                                                         |
-| ---------------------- | ------------------------------------------------------------------- |
-| 🌍 **Web Server**      | Shows websites to users (serves HTML, CSS, images, etc.)            |
-| 🔁 **Reverse Proxy**   | Passes client requests to backend servers (like Node.js, PHP, etc.) |
-| ⚖️ **Load Balancer**   | Spreads traffic across multiple servers to avoid overload           |
-| 🗂️ **Static Server**  | Efficiently serves static files (images, HTML)                      |
-| 🔐 **SSL Termination** | Handles HTTPS connections (secure)                                  |
-
-How Nginx works:
-
-User’s Browser
-     ↓
-   NGINX (Port 80/443)
-     ↓
-  Your App (e.g. Node.js on Port 3000)
-
-NGINX Configuration Basics:
-Main config file (Linux):
-📍 /etc/nginx/nginx.conf
-Site-specific config:
-📍 /etc/nginx/sites-available/your-site+
-
-🔍 Where NGINX Is Used
-Netflix
-GitHub
-Dropbox
-WordPress.com
-Instagram
-
-An Application Server is a program that runs your web application code (like Python, Node.js, PHP, Java, etc.) and handles dynamic content — like logins, form submissions, or database queries.
-It does not serve static files like images or HTML pages — that’s what NGINX does best.
-
-User visits https://example.com/login
-NGINX receives the request
-NGINX sends the request to the app server (on port 3000, for example)
-The app server processes the login (checks username/password from the database)
-Sends back a response to NGINX
-NGINX returns the response to the user's browser
-
-Diagram:
-
-Browser (User)
-     ↓
-NGINX (Reverse Proxy & Web Server)
-     ↓
-App Server (e.g., Node.js, Flask, PHP)
-     ↓
-Database (e.g., MySQL, MongoDB)
-
-The App Server runs your actual application.
-NGINX sits in front of it and handles the traffic, security, and performance.
+Client → Browser → Data → Encrypt/Decrypt → Session → Segments → Packets → Frames → Bits → Network → Webserver
+→ Apache/Nginx handles request → Fetch index file → Interpret file → Query database → Respond to client
 
 
-SSL stands for Secure Sockets Layer (now technically called TLS, but most people still say "SSL").
+---
 
-An SSL certificate is a digital certificate that:
+## 🌐 HTTP vs HTTPS
 
-✅ Confirms your website’s identity
-✅ Encrypts the data sent between the browser and your server
+- **HTTP:** Data sent in plaintext. Vulnerable to attacks.
+- **HTTPS:** Encrypted version of HTTP using SSL/TLS.
 
- What It Looks Like
-With SSL (HTTPS):
-https://example.com 🔒 Lock icon in browser
+### How They Work in a Web Server:
 
-Without SSL (HTTP):
-http://example.com ❌ "Not secure" warning
+1. User enters URL → browser sends HTTP/HTTPS request  
+2. Web server listens on port `80` (HTTP) or `443` (HTTPS)  
+3. It determines how to respond: static file, run script, access DB  
+4. If HTTPS is used → SSL/TLS handshake ensures encryption  
+
+---
+
+## 🅰️ Apache
+
+Apache is a widely used open-source web server.
+
+### 🔧 What Apache Does:
+
+- Serves content like HTML, images, and videos  
+- Handles dynamic content (PHP, Python, etc.) via modules  
+- Supports virtual hosting  
+
+### 🔌 Useful Modules:
+
+- `mod_ssl` – Enables HTTPS  
+- `mod_rewrite` – Allows URL rewriting  
+- `mod_php` – PHP processing  
+
+### 🛠 Config Files:
+
+- `/etc/httpd/conf/httpd.conf` (Red Hat/CentOS)  
+- `/etc/apache2/apache2.conf` (Ubuntu/Debian)  
+
+---
+
+## ⚙️ NGINX
+
+NGINX (pronounced "engine-x") is a high-performance web server and reverse proxy.
+
+### 💼 What NGINX Can Do:
+
+| Function             | Description                                                   |
+|----------------------|---------------------------------------------------------------|
+| 🌍 Web Server        | Serves static content like HTML, images                       |
+| 🔁 Reverse Proxy     | Forwards client requests to backend servers                   |
+| ⚖️ Load Balancer     | Distributes traffic across multiple servers                   |
+| 🗂️ Static Server     | Efficient for static files                                     |
+| 🔐 SSL Termination   | Manages secure HTTPS connections                              |
+
+### 🧠 How It Works:
+
+Browser
+↓
+NGINX (port 80/443)
+↓
+App Server (e.g., Node.js)
 
 
-Install and config Nginx to run a static web page:
+### 📁 Configuration:
 
-cd /var/www/html  --- mkdir mywebsite
+- Main config: `/etc/nginx/nginx.conf`
+- Site config: `/etc/nginx/sites-available/your-site`
+
+### 🔍 Used By:
+
+Netflix, GitHub, Dropbox, Instagram, WordPress.com
+
+---
+
+## 🧠 Application Server
+
+Runs backend application logic like Python, Node.js, Java, etc.
+
+### 🔄 Workflow:
+
+User → NGINX → App Server → DB → App Server → NGINX → Browser
+
+### 📊 Architecture Diagram:
+
+Browser
+↓
+NGINX (Web Server)
+↓
+App Server (Flask, Node.js, etc.)
+↓
+Database (MySQL, MongoDB)
+
+
+---
+
+## 🔒 SSL Certificates
+
+SSL (Secure Sockets Layer, now TLS) encrypts communication between server and browser.
+
+### ✅ Benefits:
+
+- Encrypts traffic
+- Validates website identity
+
+### 💡 Indicators:
+
+- With SSL: `https://example.com` 🔒
+- Without SSL: `http://example.com` ❌ Not secure
+
+---
+
+## 📁 Hosting a Static Site with NGINX
+
+### Setup:
+
+```bash
+cd /var/www/html
+mkdir mywebsite
 nano index.html
 
 <!DOCTYPE html>
 <html>
-<head>
-  <title>My Static Website</title>
-</head>
-<body>
-  <h1>Hello from NGINX static site!</h1>
-</body>
+<head><title>My Static Website</title></head>
+<body><h1>Hello from NGINX static site!</h1></body>
 </html>
 
 sudo chmod -R 755 /var/www/html/mywebsite
 
-Create NGINX Server Block (Config):
+Create NGINX Server Block:
+# /etc/nginx/sites-available/mywebsite
 
-sudo nano /etc/nginx/sites-available/mywebsite
 server {
     listen 80;
     server_name localhost;
@@ -148,22 +158,19 @@ server {
     }
 }
 
-sudo ln -s /etc/nginx/sites-available/mywebsite /etc/nginx/sites-enabled/
 
+sudo ln -s /etc/nginx/sites-available/mywebsite /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl reload nginx
 
-
-On local machine:
-http://localhost
-
-O/P:
-Hello from NGINX static site!
+Visit http://localhost to see your static site.
 
 
-Use monit and supervisior to monitor those servers:
+🛠 Monitoring with Monit
 
-cd /etc/monit/monitrc/conf-enabled/nginx
+Configure Monit:
+
+# /etc/monit/monitrc/conf-enabled/nginx
 
 check process nginx with pidfile /run/nginx.pid
   start program = "/usr/sbin/service nginx start"
@@ -171,50 +178,53 @@ check process nginx with pidfile /run/nginx.pid
   if failed port 80 protocol http then restart
   if 5 restarts within 5 cycles then timeout
 
-monit -t
-monit reload
-monit status
+🧩 Monitoring with Supervisor (Python App Example)
 
-SUPERVISOR TO MONITOR THE APP (EG: PYTHON APP)
-
-cd /pyapp/myapp.py
-
-# myapp.py
+Example App:
+# /home/vboxuser/pyapp/myapp.py
 import time
 
 while True:
     print("My Python app is running...")
     time.sleep(5)
 
-cd /etc/supervisor/conf.d/pyapp.conf
-                                                                                                                                 
-command=/usr/bin/python3  /home/vboxuser/pyapp/myapp.py
+Supervisor Config:
+# /etc/supervisor/conf.d/pyapp.conf
+
+command=/usr/bin/python3 /home/vboxuser/pyapp/myapp.py
 autostart=true
 autorestart=true
 stdout_logfile=/var/log/pyapp.out.log
 stderr_logfile=/var/log/pyapp.err.log
+
 
 sudo supervisorctl reread
 sudo supervisorctl update
 sudo supervisorctl start myapp
 sudo supervisorctl status
 
-Learn about the applicaion server and its difference with the Webserver:
+📘 Web Server vs Application Server
 
-| Feature            | Web Server                       | Application Server                    |
-| ------------------ | -------------------------------- | ------------------------------------- |
-| **Main Job**       | Serve static files (HTML/CSS/JS) | Run backend code / dynamic processing |
-| **Executes Code?** | ❌ No                             | ✅ Yes                                 |
-| **Serves Static?** | ✅ Yes                            | ❌ Not ideal                           |
-| **Talks to DB?**   | ❌ No                             | ✅ Yes                                 |
-| **Examples**       | Nginx, Apache                    | Gunicorn, Tomcat, Node.js             |
-| **Use case**       | Host a static site or proxy      | Run a Python/Java/Node app            |
 
-Summary:
-Webserver – Delivers web pages to users over HTTP/HTTPS (e.g., static files).
-Apache – A popular open-source web server that serves static and dynamic content.
-Nginx – A high-performance web server and reverse proxy, great for static files and load balancing.
-App server – Runs application code to handle dynamic content (e.g., Python, Node.js, Java).
-HTTP and HTTPS – Protocols for web communication; HTTPS is secure (encrypted with SSL/TLS).
-SSL certs – Digital certificates that enable encrypted HTTPS connections to secure websites.
+| Feature        | Web Server                        | Application Server                |
+| -------------- | --------------------------------- | --------------------------------- |
+| Main Job       | Serve static files (HTML/CSS/JS)  | Run backend code                  |
+| Executes Code? | ❌ No                              | ✅ Yes                             |
+| Serves Static? | ✅ Yes                             | ❌ Not ideal                       |
+| Talks to DB?   | ❌ No                              | ✅ Yes                             |
+| Examples       | Apache, NGINX                     | Gunicorn, Node.js, Tomcat         |
+| Use Case       | Host static site or reverse proxy | Process logic (e.g., login, APIs) |
 
+📝 Summary
+
+Webserver – Delivers static content over HTTP/HTTPS
+
+Apache – Powerful open-source web server
+
+Nginx – Fast, modern web server and reverse proxy
+
+App server – Runs backend code and dynamic responses
+
+HTTP/HTTPS – Web communication protocols (HTTPS is secure)
+
+SSL certs – Enable secure, encrypted connections over HTTPS
