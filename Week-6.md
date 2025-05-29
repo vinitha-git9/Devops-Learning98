@@ -159,3 +159,62 @@ http://localhost
 
 O/P:
 Hello from NGINX static site!
+
+
+Use monit and supervisior to monitor those servers:
+
+cd /etc/monit/monitrc/conf-enabled/nginx
+
+check process nginx with pidfile /run/nginx.pid
+  start program = "/usr/sbin/service nginx start"
+  stop program  = "/usr/sbin/service nginx stop"
+  if failed port 80 protocol http then restart
+  if 5 restarts within 5 cycles then timeout
+
+monit -t
+monit reload
+monit status
+
+SUPERVISOR TO MONITOR THE APP (EG: PYTHON APP)
+
+cd /pyapp/myapp.py
+
+# myapp.py
+import time
+
+while True:
+    print("My Python app is running...")
+    time.sleep(5)
+
+cd /etc/supervisor/conf.d/pyapp.conf
+                                                                                                                                 
+command=/usr/bin/python3  /home/vboxuser/pyapp/myapp.py
+autostart=true
+autorestart=true
+stdout_logfile=/var/log/pyapp.out.log
+stderr_logfile=/var/log/pyapp.err.log
+
+sudo supervisorctl reread
+sudo supervisorctl update
+sudo supervisorctl start myapp
+sudo supervisorctl status
+
+Learn about the applicaion server and its difference with the Webserver:
+
+| Feature            | Web Server                       | Application Server                    |
+| ------------------ | -------------------------------- | ------------------------------------- |
+| **Main Job**       | Serve static files (HTML/CSS/JS) | Run backend code / dynamic processing |
+| **Executes Code?** | ❌ No                             | ✅ Yes                                 |
+| **Serves Static?** | ✅ Yes                            | ❌ Not ideal                           |
+| **Talks to DB?**   | ❌ No                             | ✅ Yes                                 |
+| **Examples**       | Nginx, Apache                    | Gunicorn, Tomcat, Node.js             |
+| **Use case**       | Host a static site or proxy      | Run a Python/Java/Node app            |
+
+Summary:
+Webserver – Delivers web pages to users over HTTP/HTTPS (e.g., static files).
+Apache – A popular open-source web server that serves static and dynamic content.
+Nginx – A high-performance web server and reverse proxy, great for static files and load balancing.
+App server – Runs application code to handle dynamic content (e.g., Python, Node.js, Java).
+HTTP and HTTPS – Protocols for web communication; HTTPS is secure (encrypted with SSL/TLS).
+SSL certs – Digital certificates that enable encrypted HTTPS connections to secure websites.
+
