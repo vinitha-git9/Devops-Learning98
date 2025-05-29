@@ -77,3 +77,32 @@ Hello, Terraform!
 
 To remove the created resources:
  terraform detroy
+
+
+🛠️ Basic Terraform Commands
+
+| **Command**           | **Use / Description**                                                              |
+| --------------------- | ---------------------------------------------------------------------------------- |
+| `terraform init`      | Initializes the working directory with necessary files and provider plugins.       |
+| `terraform plan`      | Shows what changes will be made before applying them. Helps you review the impact. |
+| `terraform apply`     | Applies the configuration and creates/modifies infrastructure.                     |
+| `terraform destroy`   | Destroys the infrastructure defined in the configuration.                          |
+| `terraform validate`  | Checks whether the configuration is syntactically valid.                           |
+| `terraform fmt`       | Formats `.tf` files to a standard style.                                           |
+| `terraform show`      | Displays the current state or plan in a human-readable format.                     |
+| `terraform output`    | Shows the output values defined in your config after applying.                     |
+| `terraform state`     | Advanced command to inspect or modify Terraform state files.                       |
+| `terraform providers` | Lists all providers used in the current configuration.                             |
+| `terraform version`   | Displays the Terraform version installed.                                          |
+
+
+🚀 Suggested Command Workflow
+
+terraform init        # Initialize the project
+terraform validate    # Check for syntax errors
+terraform fmt         # Format your code
+terraform plan        # Preview the changes
+terraform apply       # Apply changes
+terraform destroy     # (Optional) Tear everything down
+
+
