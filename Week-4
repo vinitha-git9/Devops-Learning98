@@ -1,3 +1,4 @@
+
 # Daemon Management with Monit and Supervisor
 
 A **daemon** is a background program that provides services or monitors your system. Tools like **Monit**, **Supervisor**, **cron**, or **sshd** all run as daemons.
@@ -15,7 +16,7 @@ A **daemon** is a background program that provides services or monitors your sys
 | **Alerting**       | ✅ Built-in email alerts              | ❌ Requires custom scripts              |
 | **Web Interface**  | ✅ Yes (via port 2812)                | ❌ No (unless extended with plugins)    |
 | **Resource Usage** | Lightweight                          | Lightweight                            |
-| **Config Style**   | Custom declarative syntax            | INI file format                        |
+| **Config Style**   | Custom declarative syntax            | INI file format                         |
 
 ---
 
@@ -32,13 +33,11 @@ monit -v
 ### Configuration (Example: Monitor NGINX)
 
 Edit Monit config:
-
 ```bash
 sudo nano /etc/monit/monitrc
 ```
 
 Add:
-
 ```monit
 set httpd port 2812 and
     use address 127.0.0.1
@@ -51,7 +50,6 @@ check process nginx with pidfile /run/nginx.pid
 ```
 
 Reload Monit:
-
 ```bash
 sudo monit -t
 sudo monit reload
@@ -61,7 +59,6 @@ sudo monit status
 Check in browser: `http://127.0.0.1:2812`
 
 ### Alerting (Email Notifications)
-
 ```monit
 set mailserver smtp.gmail.com port 587
     username = "your_email@gmail.com"
@@ -80,7 +77,6 @@ check filesystem rootfs with path /
 ```
 
 Stop Nginx to trigger alert:
-
 ```bash
 sudo systemctl stop nginx
 ```
@@ -97,15 +93,12 @@ supervisord -v
 ```
 
 ### Python App Example
-
 ```bash
 mkdir ~/pyapp
 cd ~/pyapp
 nano myapp.py
 ```
-
 **myapp.py**
-
 ```python
 import time
 
@@ -115,11 +108,9 @@ while True:
 ```
 
 ### Configure Supervisor for Python App
-
 ```bash
 sudo nano /etc/supervisor/conf.d/pyapp.conf
 ```
-
 ```ini
 [program:pyapp]
 command=/usr/bin/python3 /home/ubuntu/pyapp/myapp.py
@@ -130,11 +121,9 @@ stderr_logfile=/var/log/pyapp.err.log
 ```
 
 ### Node App Example
-
 ```bash
 sudo nano /etc/supervisor/conf.d/nodeapp.conf
 ```
-
 ```ini
 [program:nodeapp]
 command=/usr/bin/node /home/ubuntu/nodeapp/index.js
@@ -145,7 +134,6 @@ stderr_logfile=/var/log/nodeapp.err.log
 ```
 
 ### Reload & Monitor
-
 ```bash
 sudo supervisorctl reread
 sudo supervisorctl update
@@ -213,19 +201,19 @@ emitter.emit('shutdown')
 
 ## Monit + Supervisor + Systemd Comparison
 
-| Feature                | **Systemd**                       | **Supervisor**                   | **Monit**                     |
-| ---------------------- | --------------------------------- | -------------------------------- | ----------------------------- |
-| Primary Use            | Init system, service management   | Process supervision              | Process & system monitoring   |
-| Auto-Restart           | ✅ Yes                             | ✅ Yes                            | ✅ Yes                         |
-| Process Monitoring     | 🚫 (basic only)                   | ✅ Good                           | ✅ Advanced                    |
-| System Resource Checks | ❌                                 | ❌                                | ✅ (CPU, RAM, disk, etc.)      |
-| Email Alerts           | ❌                                 | ❌                                | ✅ Yes                         |
-| Web Interface          | ❌                                 | ❌                                | ✅ Yes                         |
-| Logs                   | `journalctl`                      | stdout/stderr to log files       | Custom log paths              |
-| Configuration Style    | Declarative `.service` files      | INI-style `.conf` files          | Custom `.monitrc` or snippets |
-| Daemon Required        | Yes (part of OS)                  | Yes (supervisord)                | Yes (monit daemon)            |
-| Boot Management        | ✅ Excellent (`enable`, `disable`) | ❌ (manual or via cron/systemd)   | ❌ (manual or via Systemd)     |
-| Use Case               | OS services, system boot          | Python, Node.js, background apps | Monitoring and auto-healing   |
+| Feature                | **Systemd**                       | **Supervisor**                   | **Monit**                      |
+| ---------------------- | --------------------------------- | -------------------------------- | ------------------------------ |
+| Primary Use            | Init system, service management   | Process supervision              | Process & system monitoring    |
+| Auto-Restart           | ✅ Yes                             | ✅ Yes                            | ✅ Yes                          |
+| Process Monitoring     | 🚫 (basic only)                   | ✅ Good                           | ✅ Advanced                     |
+| System Resource Checks | ❌                                 | ❌                                | ✅ (CPU, RAM, disk, etc.)       |
+| Email Alerts           | ❌                                 | ❌                                | ✅ Yes                          |
+| Web Interface          | ❌                                 | ❌                                | ✅ Yes                          |
+| Logs                   | `journalctl`                      | stdout/stderr to log files       | Custom log paths               |
+| Configuration Style    | Declarative `.service` files      | INI-style `.conf` files          | Custom `.monitrc` or snippets  |
+| Daemon Required        | Yes (part of OS)                  | Yes (supervisord)                | Yes (monit daemon)             |
+| Boot Management        | ✅ Excellent (`enable`, `disable`) | ❌ (manual or via cron/systemd)   | ❌ (manual or via Systemd)      |
+| Use Case               | OS services, system boot          | Python, Node.js, background apps | Monitoring and auto-healing    |
 
 ---
 
@@ -234,7 +222,6 @@ emitter.emit('shutdown')
 ```bash
 sudo nano /etc/monit/conf-enabled/myapp
 ```
-
 ```monit
 check process myapp
     matching "app.py"
@@ -246,10 +233,9 @@ check process myapp
 ---
 
 ## Summary
-
-* **Monit** is great for system/service monitoring, auto-healing, and alerting.
-* **Supervisor** is perfect for managing long-running app processes.
-* **Systemd** is ideal for OS-level services and boot-time management.
+- **Monit** is great for system/service monitoring, auto-healing, and alerting.
+- **Supervisor** is perfect for managing long-running app processes.
+- **Systemd** is ideal for OS-level services and boot-time management.
 
 Choose tools based on your specific need: Monitoring vs. App Management vs. Boot Service Control.
 
