@@ -105,4 +105,96 @@ terraform plan        # Preview the changes
 terraform apply       # Apply changes
 terraform destroy     # (Optional) Tear everything down
 
+Learn about state file and why it is required:
+
+State file: A state file is a crucial component that keeps track of the infrastructure resources that the tool manages.
+Typically named: terraform.tfstate
+
+It contains a JSON-formatted record of:
+
+All resources that have been created
+Resource metadata (IDs, attributes, dependencies, etc.)
+The current state and configuration
+Resource mappings to your code.
+
+Why it is required:
+
+Mapping real infrastructure to code
+Detecting Drift
+Performance
+Tracking changes
+supports collaboration
+
+Consideration:
+Sensitive data, locking, corruption/loss
+
+🔄 Common Commands Involving State in Terraform
+
+terraform state list
+terraform state show (resource)
+terraform refresh
+
+| Concept         | Description                                                   |
+| --------------- | ------------------------------------------------------------- |
+| What it is      | JSON file tracking current state of managed infrastructure    |
+| Why it's needed | Maps code to real resources, enables safe & efficient updates |
+| Risks           | Sensitive, must be secured and managed carefully              |
+| Best practice   | Use remote storage with locking for team use                  |
+
+What is a Backend in Terraform?
+
+A backend in Terraform determines:
+where the state file is stored
+how state operation like reading, locking and writing are performed
+who can access and update the state file
+
+commonly named backend.tf
+
+Write terraform scripts to execute basic linux commands, to create and zip a file:
+
+Step:1  How can I use Terraform to run Linux commands like "create a file" and "zip it"?
+
+So, to run Linux commands, we need to:
+Use Terraform to create a virtual machine (like an EC2 instance in AWS).
+SSH into that machine automatically.
+Run the Linux commands using a "provisioner."
+
+Basic Flow
+Terraform creates a Linux server (like an EC2 in AWS).
+Terraform connects to that server using SSH.
+It runs your Linux commands: create file → zip file.
+
+🧩 What You Need
+To make it work, you’ll need:
+
+An AWS account
+A key pair (SSH key)
+Terraform installed
+
+Let’s first do it on your own machine using local-exec.
+
+cd /
+mkdir terraform
+cd terraform
+nano main.tf
+
+resource "null_resource" "file_example" {
+  provisioner "local-exec" {
+    command = <<EOT
+      echo "Hello from Terraform" > myfile.txt
+      zip myfile.zip myfile.txt
+    EOT
+  }
+}
+
+What this does:
+Creates a file called myfile.txt with some text
+Compresses (zips) that file into myfile.zip
+All on your own computer, not in the cloud
+
+terraform init
+terraform apply
+ You’ll see the files myfile.txt and myfile.zip in your folder.
+
+ step:3 running Linux commands on a remote VM (like an AWS EC2 instance) using Terraform.
 
