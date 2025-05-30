@@ -265,3 +265,69 @@ chmod 400 ~/.ssh/id_rsa
 ssh -i ~/.ssh/id_rsa ec2-user@3.91.123.45
 
 now connected to AWS EC2 user.
+
+Point to remember:
+Terraform installed
+AWS installed and configured
+terraform components:
+
+🔹 provider block
+provider "aws" {
+  region = "us-east-1"
+}
+
+🔹 resource block for EC2 instance
+resource "aws_instance" "linux_vm" {
+  ami           = "ami-0c02fb55956c7d316"  # Example for Amazon Linux 2 in us-east-1
+  instance_type = "t2.micro"
+  key_name      = "my-key-pair"            # Must match an existing EC2 key pair
+
+  tags = {
+    Name = "MyLinuxVM"
+  }
+}
+
+🔹 resource block for key pair:
+
+resource "aws_key_pair" "deployer" {
+  key_name   = "my-key-pair"
+  public_key = file("~/.ssh/id_rsa.pub")  # Make sure this path and file exist
+}
+
+🔹 resource block for security group (for SSH access)
+
+resource "aws_security_group" "ssh" {
+  name        = "allow_ssh"
+  description = "Allow SSH inbound traffic"
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]  # Allow from anywhere (not safe for production)
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+Attach this security group to the instance:
+
+  vpc_security_group_ids = [aws_security_group.ssh.id]
+
+output block:
+output "instance_public_ip" {
+  value = aws_instance.linux_vm.public_ip
+}
+
+
+✅ 3. Commands to Use
+
+terraform init     # Initialize Terraform
+terraform plan     # Preview changes
+terraform apply    # Create resources
+terraform destroy  # Delete resources
