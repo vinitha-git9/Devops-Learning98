@@ -324,10 +324,53 @@ output "instance_public_ip" {
   value = aws_instance.linux_vm.public_ip
 }
 
-
 ✅ 3. Commands to Use
 
 terraform init     # Initialize Terraform
 terraform plan     # Preview changes
 terraform apply    # Create resources
 terraform destroy  # Delete resources
+
+Write terraform scipts to create S3 buckets:
+
+mkdir terraformbucket
+cd terraformbucket
+nano main.tf
+
+#provider block
+provider "aws" {
+  region = "us-east-1"
+}
+#resource block
+resource "aws_s3_bucket" "my_bucket" {
+  bucket = "my-unique-bucket-name-2025-009"  # must be globally unique
+
+  tags = {
+    Name        = "MyS3Bucket"
+    Environment = "Dev"
+  }
+}
+#object ownership block
+resource "aws_s3_bucket_ownership_controls" "example" {
+  bucket = aws_s3_bucket.my_bucket.id
+
+  rule {
+    object_ownership = "BucketOwnerEnforced"
+ }
+}
+output "s3_bucket_name" {
+  value = aws_s3_bucket.my_bucket.bucket
+}
+
+terraform init
+terraform plan
+terraform apply
+
+s3_bucket_name = "my-unique-bucket-name-2025-009"
+
+AWS CLI: 
+aws s3 ls
+2025-05-30 13:08:51 my-unique-bucket-name-2025-009
+
+o/p: 
+
