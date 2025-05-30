@@ -198,3 +198,70 @@ terraform apply
 
  step:3 running Linux commands on a remote VM (like an AWS EC2 instance) using Terraform.
 
+create a directory: mkdir demotera
+cd demotera
+nano ec2.tf
+
+make sure you have:
+AWS account, aws key pair, access key, 
+
+provider "aws" {
+  region = "us-east-1"      # Change to your preferred region
+}
+
+resource "aws_key_pair" "deployer" {
+  key_name   = "my-key"     # Replace with your key name
+  public_key = file("~/.ssh/id_rsa.pub")  # Path to your public SSH key
+}
+
+resource "aws_security_group" "ssh_access" {
+  name        = "allow_ssh"
+  description = "Allow SSH inbound traffic"
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]   # Allow SSH from anywhere (for testing only)
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_instance" "linux_vm" {
+  ami                    = "ami-0c02fb55956c7d316"  # Amazon Linux 2 AMI in us-east-1; change for your region
+  instance_type          = "t2.micro"
+  key_name               = aws_key_pair.deployer.key_name
+  security_groups        = [aws_security_group.ssh_access.name]
+
+  tags = {
+    Name = "TerraformExampleInstance"
+  }
+}
+
+output "instance_public_ip" {
+  value = aws_instance.linux_vm.public_ip
+}
+
+
+terraform init
+terraform plan
+terraform apply
+
+Apply complete!
+Outputs:
+instance_public_ip = "3.91.123.45"
+
+SSH into your EC2 instance using the command:
+
+2. Set correct permissions on the key
+chmod 400 ~/.ssh/id_rsa
+
+ssh -i ~/.ssh/id_rsa ec2-user@3.91.123.45
+
+now connected to AWS EC2 user.
