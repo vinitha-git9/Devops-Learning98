@@ -374,3 +374,141 @@ aws s3 ls
 
 o/p: 
 
+Create the IAM role /policy using Terraform:
+
+nano main.tf
+
+# Define IAM Policy
+resource "aws_iam_policy" "example_policy" {
+  name        = "example-policy"
+  description = "Example IAM policy for demonstration"
+  path        = "/"
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action = [
+          "s3:ListBucket",
+          "s3:GetObject"
+        ],
+        Effect   = "Allow",
+        Resource = [
+          "arn:aws:s3:::example-bucket",
+          "arn:aws:s3:::example-bucket/*"
+        ]
+      }
+    ]
+  })
+}
+
+# Define IAM Role
+resource "aws_iam_role" "example_role" {
+  name = "example-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        },
+        Action = "sts:AssumeRole"
+      }
+    ]
+  })
+}
+
+# Attach IAM Policy to Role
+resource "aws_iam_role_policy_attachment" "example_attach" {
+  role       = aws_iam_role.example_role.name
+  policy_arn = aws_iam_policy.example_policy.arn
+}
+
+terraform init
+terraform plan
+terraform apply
+
+What is cloud computing:
+
+The cloud computing is the delivery of computing services like servers, database, storage, networking and software over the internet.
+Instead of owing the physical server, you can rent computer powers and services from the cloud provider.
+
+Common Cloud Providers
+AWS – Amazon Web Services
+Azure – Microsoft’s cloud platform
+Google Cloud Platform (GCP)
+
+🔑 Cloud Computing Models
+
+IaaS: Infrasturture as a Service(Example: AWS EC2, Azure Virtual Machines)
+PaaS: Platform as a Service( you manage app,Easier for developers to deploy code. Eg:AWS Elastic Beanstalk, Heroku
+SaaS: Software as a Service( Fully managed software delivered via the web eg: Gmail, Dropbox, Office 365) 
+
+🏗️ Cloud Service Categories:
+
+| Category       | Example AWS Service       | What It Does                    |
+| -------------- | ------------------------- | ------------------------------- |
+| **Compute**    | EC2, Lambda               | Run code or apps                |
+| **Storage**    | S3, EBS, Glacier          | Store files or backups          |
+| **Databases**  | RDS, DynamoDB             | Manage structured data          |
+| **Networking** | VPC, Route 53, CloudFront | Manage traffic and security     |
+| **Security**   | IAM, KMS, Shield          | Control access and protect data |
+
+📈 Benefits of Cloud Computing:
+
+Scalability – Automatically grow/shrink resources
+Cost Efficiency – Pay-as-you-go
+High Availability – Services across multiple regions
+Security – Built-in controls and compliance
+
+ IAM in the Cloud (Identity and Access Management)
+
+IAM lets you:
+Create User.
+Define what resources they can access
+securely manage permission
+
+🛠️ Real-Life Example
+
+Want to run the website,
+
+Launch a virtual server (EC2)
+Store images/files (S3)
+Use a database (RDS)
+Restrict access using IAM
+
+Types of deployment model:
+
+1.Deployment model:
+
+Public cloud:Owned and operated by third-party cloud providers like AWS, Azure, GCP.
+Example: Hosting a website on AWS EC2.
+
+Private cloud: Cloud infrastructure is used exclusively by one organization.
+Example: A bank hosting internal applications on its own data center.
+
+Hybrid Cloud:A mix of public and private clouds working together.
+Example: An e-commerce app that runs the website on AWS and keeps customer records in a private cloud.
+
+✅ d. Multi-Cloud
+Use of multiple public cloud providers.
+Example: Using AWS for compute and Azure for backup storage.
+
+🧩 2. Service Models
+| Model    | What You Manage               | What Cloud Provider Manages | Example Service               |
+| -------- | ----------------------------- | --------------------------- | ----------------------------- |
+| **IaaS** | OS, apps, runtime, middleware | Hardware, virtualization    | AWS EC2, Azure VM             |
+| **PaaS** | Your application/code only    | OS, runtime, infrastructure | AWS Elastic Beanstalk, Heroku |
+| **SaaS** | Just use the software         | Everything else             | Gmail, Dropbox, Salesforce    |
+
+| Type              | Key Focus              | Example Use Case                   |
+| ----------------- | ---------------------- | ---------------------------------- |
+| **Public Cloud**  | General-purpose use    | Hosting apps/websites              |
+| **Private Cloud** | Secure, customized use | Internal enterprise systems        |
+| **Hybrid Cloud**  | Mix of both            | Scalable & secure app hosting      |
+| **Multi-Cloud**   | Diverse provider use   | Risk mitigation, best-of-breed use |
+| **IaaS**          | Infrastructure control | Hosting VMs, building networks     |
+| **PaaS**          | App development        | Rapid coding, auto-scaling apps    |
+| **SaaS**          | End-user software      | Email, CRM, document management    |
