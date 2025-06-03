@@ -512,3 +512,29 @@ Example: Using AWS for compute and Azure for backup storage.
 | **IaaS**          | Infrastructure control | Hosting VMs, building networks     |
 | **PaaS**          | App development        | Rapid coding, auto-scaling apps    |
 | **SaaS**          | End-user software      | Email, CRM, document management    |
+
+how to access the EC2 instance from local machine (windows/Linux) using SSM:
+
+step1: create IAM role -> AmazonSSMMangedinstancecore ->add this permission
+step2: Launch instance-> remove SSH-> advanced tools-> instance congifure ->add role rule
+step3: open ubuntu-> start the session->aws ssm start-session --target <instance-id>
+step4: shell opens-> install nginx and apply simple script
+sudo apt update
+sudo apt install nginx -y
+sudo systemctl start nginx
+sudo systemctl enable nginx
+
+echo '<!DOCTYPE html><html><body><h1>Hello from NGINX via SSM!</h1></body></html>' \
+  | sudo tee /usr/share/nginx/html/index.html
+
+sudo systemctl status nginx
+
+4. Allow HTTP Traffic (Security Group)
+Outside of SSM, make sure your EC2's security group allows:
+
+Inbound rule for port 80 (HTTP)
+
+From your IP or 0.0.0.0/0 (for testing)
+
+http://<your-ec2-public-ip>/
+
