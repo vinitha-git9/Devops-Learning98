@@ -538,3 +538,39 @@ From your IP or 0.0.0.0/0 (for testing)
 
 http://<your-ec2-public-ip>/
 
+what is cloud: is the delivery of computing services like servers, storage, databases, networking, software, and more—over the internet ("the cloud").
+why cloud: cost effective,accessibility,security, scalabitity, speed and agility
+
+Types of cloud: Deployment and Service model
+
+Deployment model:Public(you can access the cloud publicly),
+private(you own one private cloud for an organisation)
+hybrid cloud(mix of public and private)
+
+Service model: IAAS(, PaaS, SaaS)
+
+| Component                  | Purpose                              | Scope        | Used For                                  |
+| -------------------------- | ------------------------------------ | ------------ | ----------------------------------------- |
+| **Region**                 | Group of data centers in a location  | Global       | Choose based on user location/legal needs |
+| **Availability Zone (AZ)** | Independent data centers in a Region | Regional     | High availability & fault tolerance       |
+| **Edge Location**          | Content delivery points              | Global       | Fast delivery using caching/CDN           |
+| **Local Zone**             | Extension of Region near users       | Metro cities | Low-latency workloads                     |
+
+Characteristics of cloud:
+On demand self service
+Resource pooling
+board network access
+measured service(pay as you go)
+Elasticity and scalability
+
+Learn about pricing and purchasing plans in AWS:
+ Pricing: AWS follow pay as you go model
+
+Purchase plan:
+Free tier: free for 12 month
+Reserved instances: commit to use the instance for 1 to 2 years
+On demand pricing:Pay per hour or per second
+Spot instances:Buy unused EC2 capacity at up to 90% discount
+Savings plan:Flexible pricing model 
+
+
