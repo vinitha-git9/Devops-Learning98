@@ -573,4 +573,8 @@ On demand pricing:Pay per hour or per second
 Spot instances:Buy unused EC2 capacity at up to 90% discount
 Savings plan:Flexible pricing model 
 
+Disaster recovery (DR) is a critical part of cloud architecture
+recover quickly from failures like hardware issues, data loss, or entire region outages.
 
+Disaster recovery strageries:
+  
