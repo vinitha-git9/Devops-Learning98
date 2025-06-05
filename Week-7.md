@@ -577,4 +577,51 @@ Disaster recovery (DR) is a critical part of cloud architecture
 recover quickly from failures like hardware issues, data loss, or entire region outages.
 
 Disaster recovery strageries:
-  
+backuo and restore:regular backups (amazon s3)
+pilot light: minimal version of your environment(EC2 AMI's)
+warm standby:scaled-down but fully functional version of your environment (route 53)
+multi-site:fully functional systems in two or more locations(Global Load Balancing (Route 53)
+| Service                                 | Purpose                                  |
+| --------------------------------------- | ---------------------------------------- |
+| **AWS Backup**                          | Centralized backup management            |
+| **Amazon S3 Glacier**                   | Low-cost long-term backup                |
+| **AWS Elastic Disaster Recovery (DRS)** | Fast failover and replication            |
+| **AWS CloudFormation**                  | Infrastructure as Code for fast rebuilds |
+| **Amazon Route 53**                     | DNS failover and traffic routing         |
+
+Latency: is a delay between the user action and system response.
+time it takes data to travel :
+->user and cloud
+->service with aws
+->bewtween az and region
+
+⚡ Common Sources of Latency in AWS
+Geographic distance
+network routing
+server performance
+service interaction
+Data Transfer Between AZ/Region
+
+AWS Tools & Services That Help Reduce Latency:
+->amazon cloufront
+->AWS global accelator
+->amazon route 53
+->aws local zones
+->Elastic load balancing
+
+Amazon EC2 – Virtual servers in the cloud
+Amazon S3 – Scalable object storage
+IAM – Secure access control and identity management
+Amazon RDS – Managed relational databases
+Lambda – Serverless function execution
+VPC – Isolated virtual network environment
+CloudFront – Content delivery network (CDN)
+Route 53 – Scalable DNS and domain management
+EBS – Block storage for EC2
+CloudWatch – Monitoring and logging service
+DynamoDB – Serverless NoSQL database
+Elastic Beanstalk – Platform-as-a-Service for apps
+ECS/EKS – Container orchestration services
+AWS Backup – Centralized backup automation
+SNS/SQS – Messaging and queuing services
+
