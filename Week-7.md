@@ -30,7 +30,22 @@ Terraform supports managing infrastructure on **AWS, Azure, GCP, Kubernetes**, a
 - **Automation and Integration**  
   Easily integrates into CI/CD pipelines for automated deployments.
 
----
+What is SSH?
+SSH stands for Secure Shell.
+
+It is a secure way to connect to another computer remotely
+You need a private key file (like MyKeyPair.pem) to prove it’s you.
+
+ssh -i MyKeyPair.pem ec2-user@54.123.45.67
+
+A Security Group is like a firewall for your EC2 instance.
+
+| Type  | Protocol | Port | Source                         |
+| ----- | -------- | ---- | ------------------------------ |
+| SSH   | TCP      | 22   | 0.0.0.0/0 (anyone, not secure) |
+| HTTP  | TCP      | 80   | 0.0.0.0/0                      |
+| HTTPS | TCP      | 443  | 0.0.0.0/0                      |
+
 
 ## 🖥️ Install Terraform on Linux
 
