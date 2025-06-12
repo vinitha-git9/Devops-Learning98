@@ -144,7 +144,78 @@ resource "aws_s3_bucket_policy" "policy" {
   })
 }
 
+Step-by-Step Guide
+🔸 Step 1: Create an S3 Bucket with Your Domain Name
+Go to S3 Console
 
+Click Create bucket
 
+Bucket name = www.yourdomain.com (must match your domain exactly)
 
+Uncheck Block all public access
 
+Click Create bucket
+
+🔸 Step 2: Enable Static Website Hosting
+Go to the bucket → Properties
+
+Scroll down to Static website hosting
+
+Enable it:
+
+Hosting type: Host a static website
+
+Index document: index.html
+
+Error document: error.html (optional)
+
+Click Save changes
+
+🔸 Step 3: Upload Your Website Files
+Go to Objects tab in the bucket
+
+Click Upload → Select index.html (and others if any)
+
+Click Upload
+
+🔸 Step 4: Make Your Files Public
+Go to Permissions → Bucket Policy
+
+Add this policy (replace your bucket name):
+
+json
+Copy
+Edit
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "PublicRead",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::www.yourdomain.com/*"
+    }
+  ]
+}
+Step 5: Set Up DNS in Route 53
+Go to Route 53 → Hosted Zones
+
+Click on your domain (e.g., yourdomain.com)
+
+Click Create Record
+
+Choose Record type: A – IPv4 address
+
+Select Alias: Yes
+
+Choose Alias target → From the dropdown, pick your S3 website endpoint (e.g., s3-website-us-east-1.amazonaws.com)
+
+Name: www or root (@) depending on setup
+
+Click Create records
+
+🔸 Step 6: Test Your Website
+Wait for DNS to propagate (usually 1–5 minutes)
+
+Open http://www.yourdomain.com
