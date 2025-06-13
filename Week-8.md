@@ -258,3 +258,49 @@ Security Integration
 Cache Invalidation
 Geo-Restriction
 Lambda@Edge
+
+CloudFront & IAM Basics Guide
+1. CloudFront
+i) Features
+Learn about the Amazon CloudFront service and its key features such as global edge locations, content caching, low latency delivery, and DDoS protection.
+
+ii) Configuration
+Understand how to configure CloudFront with an origin (like an S3 bucket), set viewer protocol policies, default root object, and caching behavior.
+
+iii) Pricing
+CloudFront pricing depends on data transfer, requests, and region-specific rates. Check the CloudFront Pricing Page for details.
+
+iv) Terraform for CloudFront
+Learn how to create infrastructure as code for CloudFront using Terraform.
+
+Example tasks:
+
+Create a static S3 site.
+
+Configure CloudFront distribution with that S3 origin.
+
+Attach SSL (ACM certificate).
+
+Use Terraform to automate the process.
+
+2. ACM (AWS Certificate Manager)
+Obtain an SSL certificate using AWS Certificate Manager.
+
+Attach the certificate to your CloudFront distribution for HTTPS support.
+
+IAM Basics
+a. IAM User
+Represents a person or application with long-term credentials (username/password or access keys).
+
+b. IAM Roles
+Define a set of permissions for making AWS service requests. Used by services or users temporarily assuming roles.
+
+c. IAM Policies
+JSON documents that define permissions. Attach to users, groups, or roles to grant or restrict access.
+
+d. Groups
+A collection of IAM users. Apply the same set of permissions to multiple users.
+
+e. Access Keys & Secret Keys
+Programmatic credentials used for CLI, SDK, and API access.
+
