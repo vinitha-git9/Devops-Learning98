@@ -241,3 +241,20 @@ terraform init
 terraform plan
 terraform apply
 
+
+Cloud front:
+
+Amazon CloudFront is a Content Delivery Network (CDN) service from AWS that securely delivers data, videos, applications, 
+and APIs to users globally with low latency and high transfer speeds.
+
+Features of Amazon CloudFront:
+Global Content Delivery
+Content Caching
+HTTPS & SSL Support
+Origin Flexibility
+Custom Error Pages
+Real-Time Logs & Metrics
+Security Integration
+Cache Invalidation
+Geo-Restriction
+Lambda@Edge
