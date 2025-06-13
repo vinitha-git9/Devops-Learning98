@@ -222,3 +222,22 @@ Click Create records
 Wait for DNS to propagate (usually 1–5 minutes)
 
 Open http://www.yourdomain.com
+
+Learn how to created terraform code for S3:
+
+cd /
+nano main.tf
+
+provider "aws" {
+  region = "us-east-1"  # Change this to your desired region
+}
+
+resource "aws_s3_bucket" "example" {
+  bucket = "vinitha98-example-bucket"  # MUST be globally unique
+  acl    = "private"
+}
+
+terraform init
+terraform plan
+terraform apply
+
