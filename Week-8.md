@@ -38,14 +38,17 @@ Storage tiers:
 | **S3 Glacier Deep Archive** | Rarely accessed (e.g. yearly backups) | Lowest cost, 12+ hours to restore   |
 
 
-🔐 Security in Amazon S3
-1. Identity and Access Management (IAM)
-2. Bucket Policies
-3. Access Control Lists (ACLs)
-4. Block Public Access
-5. Encryption
-6. Logging & Monitoring
-7. MFA (Multi-Factor Authentication) Delete
+| Feature                          | Description                                                                                                                                                      |
+| -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **IAM Policies**                 | Controls access at the **user/role level** across AWS services.                                                                                                  |
+| **Bucket Policies**              | JSON-based rules that control **who can access a bucket** and how.                                                                                               |
+| **ACLs (Access Control Lists)**  | A legacy way to grant **basic read/write permissions** to users.                                                                                                 |
+| **Block Public Access Settings** | Global setting to **prevent public access** at account or bucket level.                                                                                          |
+| **Server-Side Encryption (SSE)** | Automatically encrypts data at rest using:<br>🔸 SSE-S3 (default Amazon keys)<br>🔸 SSE-KMS (your keys via AWS KMS)<br>🔸 SSE-C (your own customer-managed keys) |
+| **Object Lock**                  | Prevents object deletion or modification for a fixed time (for compliance).                                                                                      |
+| **Access Logs**                  | Logs all requests to your bucket (optional for auditing).                                                                                                        |
+| **CloudTrail Integration**       | Tracks who accessed what data and when at the API level.                                                                                                         |
+
 
 AWS PRICING:
 
