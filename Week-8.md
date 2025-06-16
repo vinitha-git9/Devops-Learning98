@@ -247,60 +247,45 @@ Cloud front:
 Amazon CloudFront is a Content Delivery Network (CDN) service from AWS that securely delivers data, videos, applications, 
 and APIs to users globally with low latency and high transfer speeds.
 
-Features of Amazon CloudFront:
-Global Content Delivery
-Content Caching
-HTTPS & SSL Support
-Origin Flexibility
-Custom Error Pages
-Real-Time Logs & Metrics
-Security Integration
-Cache Invalidation
-Geo-Restriction
-Lambda@Edge
+When a user makes a request for your content, CloudFront delivers it from the nearest edge location, reducing latency and improving load times. This ensures low-latency delivery, high transfer speeds, and an optimized user experience.
 
-CloudFront & IAM Basics Guide
-1. CloudFront
-i) Features
-Learn about the Amazon CloudFront service and its key features such as global edge locations, content caching, low latency delivery, and DDoS protection.
+it easily integrates with other AWS services like Amazon S3, EC2, Lambda@Edge, and API Gateway.
 
-ii) Configuration
-Understand how to configure CloudFront with an origin (like an S3 bucket), set viewer protocol policies, default root object, and caching behavior.
+How cloud front works:
+ Step 1: User Requests Content
+ Step 2: DNS Routes the Request
+ Step 3: CloudFront Checks for Cached Content
 
-iii) Pricing
-CloudFront pricing depends on data transfer, requests, and region-specific rates. Check the CloudFront Pricing Page for details.
+If it’s stored: CloudFront gives the content right away.
+If not stored: CloudFront sends the request to the main server to get the content.
+Step 4: Content Comes from the Origin Server
+Step 5: CloudFront Caches the Content
+Step 6: CloudFront Delivers Content
+Step 7: Future Requests
+Step 8: Cache Update (When Needed)
 
-iv) Terraform for CloudFront
-Learn how to create infrastructure as code for CloudFront using Terraform.
+Key Features of AWS CloudFront:
 
-Example tasks:
+1. Faster Content Delivery Across the Globe
+2. Works Seamlessly with AWS Services
+3. Built-in Security & Protection Against Attacks
+4. Efficient Caching for Both Static & Dynamic Content
+5. Budget-Friendly & Scales with Your Needs
+6. Customizable with Lambda@Edge
+7. Super Low Latency & High Performance
 
-Create a static S3 site.
+Pricing Component	Description	Cost
+Data Transfer Out	Data delivered from CloudFront to the internet.	Starting at $0.085 per GB for the first 10 TB/month in the U.S., Mexico, and Canada. 
+HTTP/HTTPS Requests	Number of requests processed by CloudFront.	$0.0075 per 10,000 HTTP requests; $0.0100 per 10,000 HTTPS requests in the U.S. region. 
+Invalidation Requests	Removing cached objects before expiration.	First 1,000 paths free each month; $0.005 per path thereafter. 
+Real-Time Log Requests	Detailed logging of CloudFront requests.	$0.01 per 1,000,000 log lines. 
+Origin Shield Requests	Additional caching layer to reduce origin load.	$0.0075 per 10,000 requests in the U.S. region. 
 
-Configure CloudFront distribution with that S3 origin.
+Terraform for CloudFront:
 
-Attach SSL (ACM certificate).
-
-Use Terraform to automate the process.
-
-2. ACM (AWS Certificate Manager)
-Obtain an SSL certificate using AWS Certificate Manager.
-
-Attach the certificate to your CloudFront distribution for HTTPS support.
-
-IAM Basics
-a. IAM User
-Represents a person or application with long-term credentials (username/password or access keys).
-
-b. IAM Roles
-Define a set of permissions for making AWS service requests. Used by services or users temporarily assuming roles.
-
-c. IAM Policies
-JSON documents that define permissions. Attach to users, groups, or roles to grant or restrict access.
-
-d. Groups
-A collection of IAM users. Apply the same set of permissions to multiple users.
-
-e. Access Keys & Secret Keys
-Programmatic credentials used for CLI, SDK, and API access.
+ 1. Requirements
+An S3 bucket (with static website hosting enabled)
+A public ACM certificate (in us-east-1 region for CloudFront)
+A custom domain (optional)
+Terraform installed locally
 
