@@ -1,17 +1,8 @@
-S3: is a Simple Storage Service
+What is S3:
 
+is a Simple Storage Service
 It is a cloud-based object storage service used to store files like:
 Documents,Images,Videos,Backups,Logs,Static website files (like HTML, CSS, JS)
-
- Key Features of S3:
-Object-based storage: Stores data as objects (not files or blocks), each containing data, metadata, and a unique key.
-Unlimited storage: You can store as much data as you want.
-High durability: Designed for 99.999999999% (11 9's) durability.
-Scalability: Automatically scales to handle growing amounts of data and traffic.
-Security: Supports encryption, IAM, bucket policies, and ACLs.
-Versioning: Tracks changes to objects, allowing recovery of deleted or modified files.
-Static website hosting: Can serve HTML/CSS/JS files directly via HTTP.
-Lifecycle policies: Automate transitions between storage classes or deletion of old data.
 
 How S3 Works (Basics):
 S3 bucket: container to hold files
@@ -26,6 +17,17 @@ Region:Buckets are created in a specific AWS region
 | Download file   |  aws s3 cp s3://bucketname/file.txt |
 | List contents   |   aws s3 ls s3://bucketname  
 
+
+Key Features of S3:
+Object-based storage: Stores data as objects (not files or blocks), each containing data, metadata, and a unique key.
+Unlimited storage: You can store as much data as you want.
+High durability: Designed for 99.999999999% (11 9's) durability.
+Scalability: Automatically scales to handle growing amounts of data and traffic.
+Security: Supports encryption, IAM, bucket policies, and ACLs.
+Versioning: Tracks changes to objects, allowing recovery of deleted or modified files.
+Static website hosting: Can serve HTML/CSS/JS files directly via HTTP.
+Lifecycle policies: Automate transitions between storage classes or deletion of old data.
+
 Storage tiers:
 
 | Storage Class               | Use Case                              | Key Feature                         |
@@ -37,18 +39,18 @@ Storage tiers:
 | **S3 Glacier**              | Archive storage (long-term backups)   | Cheap, 1-5 min retrieval            |
 | **S3 Glacier Deep Archive** | Rarely accessed (e.g. yearly backups) | Lowest cost, 12+ hours to restore   |
 
-
-| Feature                          | Description                                                                                                                                                      |
-| -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **IAM Policies**                 | Controls access at the **user/role level** across AWS services.                                                                                                  |
-| **Bucket Policies**              | JSON-based rules that control **who can access a bucket** and how.                                                                                               |
-| **ACLs (Access Control Lists)**  | A legacy way to grant **basic read/write permissions** to users.                                                                                                 |
-| **Block Public Access Settings** | Global setting to **prevent public access** at account or bucket level.                                                                                          |
-| **Server-Side Encryption (SSE)** | Automatically encrypts data at rest using:<br>🔸 SSE-S3 (default Amazon keys)<br>🔸 SSE-KMS (your keys via AWS KMS)<br>🔸 SSE-C (your own customer-managed keys) |
-| **Object Lock**                  | Prevents object deletion or modification for a fixed time (for compliance).                                                                                      |
-| **Access Logs**                  | Logs all requests to your bucket (optional for auditing).                                                                                                        |
-| **CloudTrail Integration**       | Tracks who accessed what data and when at the API level.                                                                                                         |
-
+Security:
+| Security Layer        | Purpose                                    | Recommended  |
+| --------------------- | ------------------------------------------ | ------------ |
+| IAM Policies          | Control user/role access                   | ✅            |
+| Bucket Policies       | Control access to buckets                  | ✅            |
+| ACLs                  | Object-level control (legacy)              | ❌ Avoid      |
+| Block Public Access   | Prevent accidental public exposure         | ✅            |
+| Encryption at Rest    | Protect stored data                        | ✅            |
+| Encryption in Transit | Protect data on the move                   | ✅            |
+| S3 Access Logging     | Monitor access                             | ✅            |
+| MFA Delete            | Protect from accidental deletions          | ✅ (optional) |
+| Versioning            | Recover from accidental overwrites/deletes | ✅            |
 
 AWS PRICING:
 
@@ -94,6 +96,7 @@ Restrict Access by IP Address:
   }
 }
 
+Terraform for S3:
 
 Terraform is an Infrastructure as Code (IaC) tool used to automate the creation and management of S3 buckets and their configurations in AWS.
 
@@ -272,9 +275,8 @@ Key Features of AWS CloudFront:
 4. Efficient Caching for Both Static & Dynamic Content
 5. Budget-Friendly & Scales with Your Needs
 6. Customizable with Lambda@Edge
-7. Super Low Latency & High Performance
 
-Pricing Component	Description	Cost
+Pricing Component	Description	Cost:
 Data Transfer Out	Data delivered from CloudFront to the internet.	Starting at $0.085 per GB for the first 10 TB/month in the U.S., Mexico, and Canada. 
 HTTP/HTTPS Requests	Number of requests processed by CloudFront.	$0.0075 per 10,000 HTTP requests; $0.0100 per 10,000 HTTPS requests in the U.S. region. 
 Invalidation Requests	Removing cached objects before expiration.	First 1,000 paths free each month; $0.005 per path thereafter. 
@@ -285,7 +287,45 @@ Terraform for CloudFront:
 
  1. Requirements
 An S3 bucket (with static website hosting enabled)
-A public ACM certificate (in us-east-1 region for CloudFront)
+A public ACM certificate (in us-east-1c region for CloudFront)
 A custom domain (optional)
 Terraform installed locally
+
+Create static s3 site with HTTPS:
+
+S3 bucket with static website hosting
+ACM SSL certificate (in us-east-1, required for CloudFront)
+CloudFront distribution with HTTPS
+Route 53 record pointing to your domain (optional)
+
+IAM Basics:
+IAM is a service by AWS that lets you securely control access to AWS services and resources.
+
+It allows you to manage:
+Who can access your AWS resources
+What actions they can perform
+Which resources they can access
+
+| Component       | Description                                                                                      |
+| --------------- | ------------------------------------------------------------------------------------------------ |
+| **User**        | An individual identity with credentials to access AWS (e.g., admin, developer)                   |
+| **Group**       | A collection of IAM users; you can assign **policies** to a group                                |
+| **Policy**      | A JSON document that defines permissions (Allow/Deny)                                            |
+| **Role**        | An IAM identity **you can assume temporarily** — often used by services (e.g., EC2 to access S3) |
+| **Access Key**  | Used by IAM users to access AWS programmatically (CLI, SDK)                                      |
+| **Permissions** | Defined using policies that determine what a user or role can do                                 |
+
+
+What Are Access Keys and Secret Keys?
+They are credentials used by IAM users to make programmatic requests to AWS (via:
+AWS CLI
+SDKs (like Python Boto3, Node.js, etc.)
+
+Terraform:
+
+Key	Description
+Access Key ID	Public identifier (like a username)
+Secret Access Key	Private key (like a password)
+
+❗ Keep the Secret Key secure — it’s only shown once when you create it!
 
