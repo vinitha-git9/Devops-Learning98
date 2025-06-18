@@ -113,6 +113,15 @@ Router
 DNS
 Reserved for future
 
+ Learn and create VPC and subnets:
 
+ steps1: Create VPC with CIDR block
+ Step2: Create two subnet public and private with correct range
+ step3: create seperate route table 
+ step 4: Go to edit route table submission and add public subnet to pub-route
+ and private subnet to pri route
+
+step5: then create Internet gateway and connect it to VPC
+step 6: then go to pub route --> edit---> add route ---> add Internet gateway---> save
 
 
