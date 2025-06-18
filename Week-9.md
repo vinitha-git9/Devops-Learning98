@@ -118,10 +118,63 @@ Reserved for future
  steps1: Create VPC with CIDR block
  Step2: Create two subnet public and private with correct range
  step3: create seperate route table 
+
  step 4: Go to edit route table submission and add public subnet to pub-route
  and private subnet to pri route
 
 step5: then create Internet gateway and connect it to VPC
 step 6: then go to pub route --> edit---> add route ---> add Internet gateway---> save
+
+Network ACL'S:A network access control list (ACL) is an optional layer of security for your VPC that acts as a firewall for controlling traffic in and out of one or more subnets.
+
+A security group acts as a virtual firewall that controls the traffic for one or more instances
+
+| Feature                 | **Security Group**                               | **NACL (Network ACL)**                          |
+| ----------------------- | ------------------------------------------------ | ----------------------------------------------- |
+| **1. Type of Firewall** | **Stateful** – Response traffic is auto-allowed  | **Stateless** – Inbound & outbound rules needed |
+| **2. Rule Types**       | Only **Allow** rules supported                   | Supports both **Allow** and **Deny** rules      |
+| **3. Scope**            | Applied to **EC2 Instances** (network interface) | Applied to **Subnets**                          |
+
+
+
+
+Internet Gateway (IGW)
+✅ What is it?
+An Internet Gateway is a VPC component that allows communication between resources in your VPC and the internet.
+
+✅ Key Features:
+Used to give public internet access to resources (like EC2 instances) in a public subnet.
+
+Required for outbound and inbound traffic to/from the internet.
+
+Must be attached to the VPC (one IGW per VPC).
+
+✅ Use Case:
+Public-facing web servers (e.g., websites hosted on EC2 or S3).
+
+EC2 instances with public IPs need IGW for internet access.
+
+🔁 NAT Gateway (Network Address Translation Gateway)
+✅ What is it?
+A NAT Gateway allows instances in private subnets to access the internet (for updates, software install, etc.) without exposing them to incoming internet traffic.
+
+✅ Key Features:
+Only allows outbound internet traffic from private subnets.
+
+Does not allow inbound connections from the internet.
+
+Managed AWS service, more scalable and reliable than NAT instances.
+
+✅ Use Case:
+EC2 instances in a private subnet need to download packages, updates, etc.
+
+Used when you want to keep resources private but still allow limited internet access.
+| Feature                                | Internet Gateway (IGW) | NAT Gateway    |
+| -------------------------------------- | ---------------------- | -------------- |
+| **Direction**                          | Inbound & Outbound     | Outbound only  |
+| **Used By**                            | Public Subnet          | Private Subnet |
+| **Requires Public IP?**                | Yes (on EC2)           | No             |
+| **Attached To**                        | VPC                    | Subnet         |
+| **Can receive traffic from internet?** | Yes                    | No             |
 
 
