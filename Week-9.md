@@ -1,121 +1,118 @@
-🔶 1. Public IP, Private IP, IPv4 & IPv6
-📌 Public IP
-Assigned by AWS (automatically or manually).
+VPC= Virtual Private Cloud
 
-Used when you want your EC2 instance to communicate with the internet.
+VPC stands for Virtual Private Cloud — it's your own isolated network in AWS where you can launch resources like:
+EC2 (virtual servers),RDS (databases),Load balancers and more...
 
-Associated with Elastic IP if you want a persistent public IP.
+You control: IP address ranges,Subnets,Routing,Security (firewalls)
 
-📌 Private IP
-Used for internal communication between instances within the same VPC.
+🧱 Key Components of VPC:
+| Component                | Description                                  |
+| ------------------------ | -------------------------------------------- |
+| **CIDR Block**           | IP range of the VPC (e.g. `10.0.0.0/16`)     |
+| **Subnet**               | Smaller sections of the VPC (private/public) |
+| **Internet Gateway**     | Enables internet access for the VPC          |
+| **Route Table**          | Controls routing within the VPC              |
+| **Security Groups**      | Virtual firewalls for EC2 instances          |
+| **NACLs (Network ACLs)** | Optional subnet-level firewalls              |
 
-Not routable from the internet.
+📦 Simple Architecture Example
 
-Each instance gets a private IP from the subnet’s CIDR block.
+VPC: 10.0.0.0/16
+│
+├── Public Subnet: 10.0.1.0/24
+│   └── EC2 instance with internet access
+│
+├── Private Subnet: 10.0.2.0/24
+    └── RDS (no internet access)
 
-📌 IPv4
-Format: 192.168.1.1 (32-bit).
+| Term           | Description                                                                                                     |
+| -------------- | --------------------------------------------------------------------------------------------------------------- |
+| **Public IP**  | Globally unique IP assigned to resources (like EC2) that can be accessed over the internet.                     |
+| **Private IP** | IP used for communication within a VPC. Not routable on the internet.                                           |
+| **IPv4**       | 32-bit address format (e.g., `192.168.0.1`). Most commonly used.                                                |
+| **IPv6**       | 128-bit address format (e.g., `2400:cb00:2048:1::c629:d7a2`) with a much larger address space. Optional in VPC. |
 
-AWS allows CIDR block allocation like 10.0.0.0/16.
+| Term                                      | Description                                                                                  |
+| ----------------------------------------- | -------------------------------------------------------------------------------------------- |
+| **VPC (Virtual Private Cloud)**           | A virtual network in AWS where you launch AWS resources.                                     |
+| **CIDR (Classless Inter-Domain Routing)** | IP address range for a network. Example: `10.0.0.0/16` means 65,536 IPs.                     |
+| **Subnet**                                | A segment of the VPC CIDR block. Can be public (internet-facing) or private (internal only). |
 
-📌 IPv6
-Format: 2001:0db8:85a3:0000:0000:8a2e:0370:7334 (128-bit).
+| Security Tool                          | Description                                                                                           |
+| -------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| **NACL (Network Access Control List)** | Subnet-level firewall. Supports **allow** and **deny** rules. Stateless.                              |
+| **Security Group**                     | Instance-level firewall. Only supports **allow** rules. Stateful (response is automatically allowed). |
 
-Not enabled by default in VPC.
+| Component                  | Purpose                                                                                                 |
+| -------------------------- | ------------------------------------------------------------------------------------------------------- |
+| **Internet Gateway (IGW)** | Allows internet access for public subnets.                                                              |
+| **NAT Gateway**            | Allows **private subnets** to access the internet (for updates) without exposing the instances.         |
+| **Route Table**            | A set of rules (routes) that control traffic direction. Each subnet is associated with one route table. |
+| Resource | IP          | Subnet  | Access                                 |
+| -------- | ----------- | ------- | -------------------------------------- |
+| EC2-A    | `10.0.1.10` | Public  | Has Public IP, Internet access via IGW |
+| EC2-B    | `10.0.2.10` | Private | Uses NAT Gateway for internet access   |
 
-Supports massive scale and internet-ready communication.
+CIDR RANGE:
 
-🔶 2. VPC, CIDR, Subnets
-📌 VPC (Virtual Private Cloud)
-Your own isolated network in AWS cloud.
+What does 10.0.0.0/24 mean?
+CIDR block: 10.0.0.0/24
 
-You can control IP ranges, subnets, route tables, gateways, etc.
+Subnet mask: 255.255.255.0
 
-Can span across multiple Availability Zones (AZs).
+Total IPs:
+2^(32 - 24) = 2^8 = 256 IP addresses
 
-📌 CIDR Block
-Defines IP range of the VPC.
+Usable IPs in AWS:
+256 - 5 = 251 IP addresses
+(Because AWS reserves 5 IPs in each subnet)
 
-Example: 10.0.0.0/16 → gives 65,536 IP addresses.
+IP Address Range:
+Starts from: 10.0.0.0
+Ends at: 10.0.0.255
 
-Each subnet is a subset of the VPC’s CIDR block.
+But usable host IPs are:
 
-📌 Subnets
-Segments of the VPC.
+From 10.0.0.1 to 10.0.0.254
+Because:
 
-You typically create:
+10.0.0.0 → Network address (not usable)
 
-Public Subnets → connect to the internet.
+10.0.0.255 → Broadcast address (not usable)
 
-Private Subnets → no direct internet access.
+And AWS reserves 3 more for internal use:
+Router
+DNS
+Reserved for future
 
-Each subnet must be in one Availability Zone only.
+| Item          | Value                         |
+| ------------- | ----------------------------- |
+| CIDR Block    | `10.0.0.0/24`                 |
+| Subnet Mask   | `255.255.255.0`               |
+| Total IPs     | 256                           |
+| Usable in AWS | 251                           |
+| Suitable for  | Small subnet (public/private) |
 
-🔶 3. NACL, Security Groups
-📌 Network Access Control List (NACL)
-Stateless firewall: Rules must be defined for both inbound and outbound traffic.
 
-Applied at subnet level.
+If 10.0.0.0/16
 
-Useful for controlling traffic at a broader level (e.g., allow only certain IP ranges).
+2^(32-16)=65536
+usable in AWS= 65536-5= 65531
 
-Example Rule: Allow port 80 inbound from 0.0.0.0/0.
+10.0.0.0--- 10.0.0.0.65535
 
-📌 Security Groups
-Stateful firewall: If inbound is allowed, outbound is automatically allowed.
+10.0.0.0 and 10.0.0.65535 for internet and broadcast address
 
-Applied to EC2 instances (not subnets).
+total ip= 65536
+cidr block=10.0.0.0/16
+subnet mask=255.255.0.0
+usable in AWS=65531
 
-Acts like a virtual firewall for your instance.
+And AWS reserves 3 more for internal use:
+Router
+DNS
+Reserved for future
 
-Example: Allow SSH (port 22) from your IP only.
 
-🔶 4. NAT Gateway, Internet Gateway, Route Tables
-📌 Internet Gateway (IGW)
-A component that allows instances in your VPC to access the internet.
 
-Must be attached to the VPC.
-
-Route table must have a route like:
-
-0.0.0.0/0 → IGW (for public subnet)
-
-📌 NAT Gateway
-Allows instances in private subnets to access the internet (e.g., for software updates).
-
-Blocks inbound traffic initiated from the internet.
-
-Needs a public subnet and Elastic IP.
-
-📌 Route Tables
-Defines how traffic is routed in your VPC.
-
-Each subnet is associated with one route table.
-
-Example entries:
-
-Local → for internal VPC traffic.
-
-0.0.0.0/0 → IGW (for public subnets)
-
-0.0.0.0/0 → NAT Gateway (for private subnets)
-
-✅ Summary Diagram (Textual)
-pgsql
-Copy
-Edit
-                +-------------------------+
-                |       Internet          |
-                +-----------+-------------+
-                            |
-                      [Internet Gateway]
-                            |
-      +---------------------+----------------------+
-      |                                            |
-Public Subnet (with IGW)                  Private Subnet (with NAT)
-  - Web Servers                            - App DB, Backends
-  - Public IP                              - No direct internet access
-  - Route: 0.0.0.0/0 → IGW                 - Route: 0.0.0.0/0 → NAT GW
-
-             [ VPC CIDR: 10.0.0.0/16 ]
 
