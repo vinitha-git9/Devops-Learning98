@@ -178,3 +178,35 @@ Used when you want to keep resources private but still allow limited internet ac
 | **Can receive traffic from internet?** | Yes                    | No             |
 
 
+✅ Public Subnet Route Table (NO NAT Gateway)
+📝 Goal: Instance has a public IP, must access the internet directly.
+
+Steps to Remember:
+Create Internet Gateway (IGW)
+Create Route Table → Name it public-rt
+Add Route:
+Destination: 0.0.0.0/0
+Target: Internet Gateway
+
+Associate this route table to your public subnet
+
+🔁 Simple Rule:
+
+0.0.0.0/0 → Internet Gateway
+✅ Private Subnet Route Table (WITH NAT Gateway)
+📝 Goal: Instance has no public IP, but must access the internet (outbound only).
+
+Steps to Remember:
+Create NAT Gateway in a public subnet
+Create Route Table → Name it private-rt
+Add Route:
+Destination: 0.0.0.0/0
+Target: NAT Gateway
+Associate this route table to your private subnet
+🔁 Simple Rule:
+0.0.0.0/0 → NAT Gateway
+🧠 Easy Way to Memorize:
+Subnet	Target	Internet Access	Needs Public IP?
+Public	Internet Gateway	✅ Yes (in & out)	✅ Yes
+Private	NAT Gateway	✅ Outbound only	❌ No
+
