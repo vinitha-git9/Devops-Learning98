@@ -208,5 +208,54 @@ Associate this route table to your private subnet
 🧠 Easy Way to Memorize:
 Subnet	Target	Internet Access	Needs Public IP?
 Public	Internet Gateway	✅ Yes (in & out)	✅ Yes
-Private	NAT Gateway	✅ Outbound only	❌ No
+Private	NAT Gateway	✅ 
+Outbound only	❌ No
+
+Learn about AMI, types of EC2 instances available, and what is a key pair?
+
+AMI: An AMI is a blueprint for your EC2 instance
+
+Operating system (like Amazon Linux, Ubuntu, Windows)
+Installed software (web server, database, etc.)
+
+🟢 2. Types of EC2 Instances
+Family	Purpose	Example Types
+General Purpose	Balanced CPU, memory	t2.micro, t3.medium
+Compute Optimized	High-performance CPU workloads	c5.large, c6g.large
+
+🟢 3. What is a Key Pair in EC2?
+A Key Pair is used for secure access to your EC2 instance via SSH (Linux) or RDP (Windows).
+
+1. AWS EC2 Basic Pricing Models
+AWS offers multiple pricing options so you can choose based on your cost, performance, and availability needs.
+
+🧾 a. On-Demand Instances
+Pay-as-you-go
+No long-term commitment
+💡 Use When: You have short-term or unpredictable workloads
+
+💸 b. Reserved Instances (RI)
+Commit for 1 or 3 years
+Get up to 75% discount compared to On-Demand
+Choose Standard RI or Convertible RI
+💡 Use When: You have steady workloads (e.g., production systems)
+
+🌀 c. Spot Instances
+Buy unused EC2 capacity at up to 90% discount
+Can be terminated by AWS anytime
+💡 Use When:Your app can handle interruptions
+Great for batch jobs, CI/CD, testing, big data
+
+🧮 d. Savings Plans
+Flexible alternative to RIs
+Commit to a spending level ($/hour) for 1 or 3 years
+Applies to many services (EC2, Fargate, Lambda)
+
+✅ 2. What is a Launch Template?
+A Launch Template in EC2 is a pre-defined configuration used to launch instances repeatedly without re-entering settings.
+
+✨ It Includes:
+AMI ID,Instance type,Key pair,Security groups,IAM role,User data (startup scripts)
+Volume settings, etc.
+
 
