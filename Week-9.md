@@ -258,4 +258,61 @@ A Launch Template in EC2 is a pre-defined configuration used to launch instances
 AMI ID,Instance type,Key pair,Security groups,IAM role,User data (startup scripts)
 Volume settings, etc.
 
+ What is a Volume?
+In AWS, a Volume refers to an EBS (Elastic Block Store) volume — it is a virtual hard disk that you can attach to an EC2 instance.
+
+🔹 Think of it like:
+Your EC2 is a computer 💻
+An EBS volume is the hard disk (C: drive or D: drive) 💽
+
+| Feature         | Description                                        |
+| --------------- | -------------------------------------------------- |
+| **Type**        | EBS Volume (e.g., gp3, io1, st1, etc.)             |
+| **Attached to** | One EC2 instance at a time (but can detach/attach) |
+| **Use**         | Store OS, apps, files, DBs, etc.                   |
+| **Size**        | You choose (e.g., 8 GB, 100 GB)                    |
+| **Durability**  | Data persists even if EC2 stops                    |
+| **Billing**     | You pay per GB per month                           |
+
+What is a Snapshot?
+A Snapshot is a backup of an EBS volume at a specific point in time.
+
+🔹 Think of it like:
+A snapshot is a photo of your hard disk that you can restore later
+
+
+| Feature         | Description                                             |
+| --------------- | ------------------------------------------------------- |
+| **Type**        | Stored in Amazon S3 (managed by AWS, not visible in S3) |
+| **Used for**    | Backup, restore, creating new volumes                   |
+| **Incremental** | Only changes since last snapshot are stored             |
+| **Restorable?** | Yes, you can create a new volume from any snapshot      |
+| **Billing**     | You pay only for data stored (not full volume size)     |
+
+
+What is EFS?
+EFS (Elastic File System) is a fully managed, shared, scalable file storage service for use with EC2 and other AWS services.
+
+Think of EFS like a shared drive (network file system) that multiple EC2 instances can mount at the same time — like a cloud version of an NFS server.
+
+What is Instance Store?
+Instance Store is temporary block-level storage that comes physically attached to the host machine running your EC2 instance.
+Unlike EBS or EFS, instance store data is lost when:
+The instance stops
+The instance terminates
+The host fails
+
+What is a Snapshot in AWS?
+A snapshot is a point-in-time backup of an EBS volume.
+It's stored in Amazon S3 (internally — not visible in your S3 console).
+You can restore a snapshot to create a new EBS volume.
+
+Snapshot Lifecycle
+EC2 instance uses an EBS volume
+You create a snapshot of the volume
+You can later:
+Restore to new EBS volume
+Launch a new EC2 instance using that volume
+Copy to another region
+
 
