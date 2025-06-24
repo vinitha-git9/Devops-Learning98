@@ -315,4 +315,56 @@ Restore to new EBS volume
 Launch a new EC2 instance using that volume
 Copy to another region
 
+ 1. What is Auto Scaling and Why Do We Use It?
+Auto Scaling means automatically increasing or decreasing the number of EC2 instances (servers) in your application based on current demand.
 
+✅ Why it's useful:
+
+Saves money by removing unused instances
+Maintains performance by adding instances when needed
+Handles unexpected traffic spikes
+Reduces manual work – it’s automatic!
+
+⚙️ 2. Step Scaling and Target Tracking Policies
+📏 Step Scaling:
+You set steps or levels for scaling.
+
+🎯 Target Tracking Scaling:
+You tell AWS: “Keep CPU at 50%”
+It automatically adjusts the number of servers to keep that average.
+
+⏰ 3. Predictive, Scheduled, and Dynamic Scaling
+🔮 Predictive Scaling:
+AWS uses machine learning to guess future traffic based on past patterns.
+Example: It learns that traffic always increases at 10 AM, so it adds servers before that.
+
+📅 Scheduled Scaling:
+You tell AWS to scale at specific times.
+Example: Add 2 servers every weekday at 8 AM and remove them at 6 PM.
+
+📊 Dynamic Scaling:
+Scaling based on real-time usage data, like CPU, memory, etc.
+Adds/removes servers based on actual demand.
+
+🧊 4. Warm Pool, Scale-In Protection, and Cool Down Period
+🔥 Warm Pool:
+These are standby servers that are already initialized but not running.
+They start quickly when needed, saving launch time.
+
+🛡️ Scale-In Protection:
+Protects important servers from being accidentally shut down when scaling in (removing instances).
+You can mark certain instances as “don’t remove these.”
+
+⏱️ Cool Down Period:
+A rest time after scaling action.
+Prevents rapid scaling in/out too quickly.
+Gives time for the instance to start and metrics to stabilize.
+
+🔐 5. Important Ports
+
+| Port     | Use                              |
+| -------- | -------------------------------- |
+| **22**   | SSH (connect to Linux servers)   |
+| **3389** | RDP (connect to Windows servers) |
+| **80**   | HTTP (normal website traffic)    |
+| **443**  | HTTPS (secure website traffic)   |
