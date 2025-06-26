@@ -174,3 +174,75 @@ Use monitoring tools regularly
 | MariaDB    | MySQL alternative               | Open-source     |
 | Oracle     | Enterprise, ERP, banking        | Commercial      |
 | SQL Server | Windows-based enterprise apps   | Commercial      |
+
+
+How to connect EC2 with RDS:
+
+Create RDS--> Any engine(mysql)--> default private ip-->Add ec2-->created
+Create  EC2 with your vpc and public ip
+now connect instance
+
+📦 Step 2: Install Python and pip
+For Amazon Linux 2023:
+
+sudo dnf install python3 -y
+sudo dnf install python3-pip -y
+
+🔌 Step 3: Install MySQL client for Python 
+pip3 install pymysql
+📂 Step 6: Create Project Folder & Python File
+
+mkdir ~/myapp
+cd ~/myapp
+nano app.py
+Paste this code:
+
+import pymysql
+
+# Replace with your actual RDS info
+host = "your-rds-endpoint.rds.amazonaws.com"
+user = "admin"
+password = "yourpassword"
+database = "myappdb"
+
+try:
+    connection = pymysql.connect(
+        host=host,
+        user=user,
+        password=password,
+        database=database
+    )
+    cursor = connection.cursor()
+
+    # Create table if it doesn't exist
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS users (
+        id INT PRIMARY KEY,
+        name VARCHAR(100),
+        email VARCHAR(100)
+    )
+    """)
+
+    # Insert a user
+    cursor.execute("INSERT INTO users (id, name, email) VALUES (1, 'Vini', 'vini@example.com')")
+    connection.commit()
+
+    # Read users
+    cursor.execute("SELECT * FROM users")
+    rows = cursor.fetchall()
+
+    print("📋 User Table Data:")
+    for row in rows:
+        print(row)
+
+    connection.close()
+
+except Exception as e:
+    print("❌ Error:", e)
+▶️ Step 7: Run Your Python Script
+ 
+ python3 app.py
+✅ You should see output like:
+
+📋 User Table Data:
+(1, 'Vini', 'vini@example.com')
