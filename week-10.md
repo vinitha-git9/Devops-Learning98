@@ -246,3 +246,23 @@ except Exception as e:
 
 📋 User Table Data:
 (1, 'Vini', 'vini@example.com')
+
+Imagine you're building a web app (like Amazon, Flipkart, or a blog):
+
+| Component                              | Runs on... | Purpose                                      |
+| -------------------------------------- | ---------- | -------------------------------------------- |
+| 💻 Frontend (HTML, CSS, JS)            | EC2        | What users see in browser                    |
+| ⚙️ Backend code (PHP, Python, Node.js) | EC2        | Processes user input                         |
+| 🛢️ Database (MySQL, PostgreSQL)       | RDS        | Stores structured data (users, orders, etc.) |
+
+The Backend needs to talk to the Database to:
+✅ Store user sign-up details
+
+✅ Login users
+
+✅ Save orders, comments, payments
+
+✅ Fetch products, prices, data
+
+So — EC2 must connect to RDS.
+
