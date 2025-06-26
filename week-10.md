@@ -155,3 +155,22 @@ Use read replicas to reduce load
 
 Use monitoring tools regularly
 
+
+| **DB Engine**            | **Simple Description**                                                                                                                 |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
+| **Amazon Aurora**        | AWS-built DB that’s compatible with MySQL and PostgreSQL but **faster and more reliable**. Ideal for high performance and scaling.     |
+| **MySQL**                | Most popular open-source database. Easy to use, good for **web applications**.                                                         |
+| **PostgreSQL**           | Powerful open-source database. Supports **advanced queries**, ideal for complex apps.                                                  |
+| **MariaDB**              | A fork of MySQL, maintained by the community. Works similar to MySQL but with extra **open-source features**.                          |
+| **Oracle**               | Enterprise-grade database. Great for **large organizations** needing advanced features like clustering, PL/SQL, etc. Requires license. |
+| **Microsoft SQL Server** | Popular in Windows environments. Good for apps using **.NET or Windows platforms**. Supports T-SQL and SSRS/SSIS.                      |
+
+
+| Engine     | Best For                        | License Type    |
+| ---------- | ------------------------------- | --------------- |
+| Aurora     | High performance & scaling      | AWS proprietary |
+| MySQL      | General apps, websites          | Open-source     |
+| PostgreSQL | Complex queries, GIS, analytics | Open-source     |
+| MariaDB    | MySQL alternative               | Open-source     |
+| Oracle     | Enterprise, ERP, banking        | Commercial      |
+| SQL Server | Windows-based enterprise apps   | Commercial      |
