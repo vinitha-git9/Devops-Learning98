@@ -225,3 +225,31 @@ FROM ubuntu
 RUN apt-get update && apt-get install -y python3 python3-pip
 RUN pip install flask flask-mysql
 COPY .opt/source-code
+
+ steps to create simple php application run in apache server:
+
+ create folder named: PHP-DOCKER-APP
+ create two file under folder:
+
+ Dockerfile
+ index.php
+
+ index.php
+ 
+<?php
+echo "Hello from Dockerized PHP on VM!";
+?>
+
+
+Dockerfile
+
+FROM php:8.2-apache
+COPY . /var/www/html/
+EXPOSE 80
+
+Opem ubuntu 
+1. git clone "url"
+2. docker build -t php-app .
+3. docker run -d -p 8000:80 php-app
+4. open internal google 
+http://localhost:8000
