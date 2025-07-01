@@ -1,0 +1,63 @@
+
+ Architecture 1: Static Website Hosting
+ ✅ Used for: Simple websites (HTML, CSS, JS)
+
+🧱 Services Used:
+
+S3 → To store your website files
+
+CloudFront (optional) → To make it faster globally
+
+Route 53 → To give your website a domain name
+
+🖼️ How it Works:
+[User] → [CloudFront] → [S3 Bucket with website files]
+
+🏗️ Architecture 2: Web App with Database (Docker-based)
+
+✅ Used for: Voting apps, ecommerce, blogs
+
+🧱 Services Used:
+
+ECS (or EC2/Fargate) → To run your app in Docker
+
+RDS → To store data (like users, votes, orders)
+
+ALB (Load Balancer) → To distribute traffic
+
+S3 → To store images or uploads
+
+CloudWatch → To monitor app logs and performance
+
+🖼️ How it Works:
+
+[User] → [Load Balancer] → [ECS (Docker containers)]
+                                 ↓
+                               [RDS]
+                                 ↓
+                               [S3]
+
+A dynamic app with a database like a voting system or food delivery app.
+
+
+Architecture 3: Serverless App (No EC2 or Docker at all)
+✅ Used for: Lightweight apps, automation, microservices
+
+🧱 Services Used:
+API Gateway → To receive HTTP requests
+
+Lambda → To run backend code (no servers)
+
+DynamoDB → To store data (NoSQL)
+
+S3 → Optional: File storage
+
+CloudWatch → Logging and alerts
+
+🖼️ How it Works:
+
+[User] → [API Gateway] → [Lambda Functions]
+                                 ↓
+                              [DynamoDB]
+
+

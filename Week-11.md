@@ -253,3 +253,150 @@ Opem ubuntu
 3. docker run -d -p 8000:80 php-app
 4. open internal google 
 http://localhost:8000
+
+Environment variable = a value (like password or port) stored outside the code, but used inside the app.
+
+export APP_COLOR=blue; python app.py
+
+docker run -e APP_COLOR=blue simple-webapp-color
+
+When your application consists of multiple services, managing each container separately can become cumbersome. Docker Compose streamlines this process by allowing you to define all required services in a single YAML file (commonly named docker-compose.yml). You can then launch the complete stack with the docker-compose up command.
+
+Example: Basic Docker Compose Configuration
+
+Below is an example Docker Compose file that defines multiple services:
+
+
+# docker-compose.yml
+services:
+  web:
+    image: "mmunshad/simple-webapp"
+  database:
+    image: "mongodb"
+  messaging:
+    image: "redis:alpine"
+  orchestration:
+    image: "ansible"
+
+Start your multi-container application with:
+
+docker-compose.yaml
+docker-compose up
+
+Docker engine:
+Core Components of Docker on Linux
+Docker Daemon:
+A background process that manages Docker objects such as images, containers, volumes, and networks.
+
+Docker REST API Server:
+An interface enabling programs to communicate with the daemon. This API facilitates the development of custom tools and integrations.
+
+Docker CLI:
+A command-line interface used to execute operations such as starting or stopping containers and managing images. The CLI communicates with the Docker daemon via the REST API.
+
+For example, to run an Nginx container on a remote Docker host, use the command below:
+
+docker -H=10.123.2.1:2375 run nginx
+
+Docker engine:
+Docker Engine is the core software that lets you build, run, and manage containers on your system.
+
+Core Components of Docker on Linux
+Docker deamon
+Docker Rest API
+Docker CLI
+
+Managing Resources with cgroups
+docker run --cpus=0.5 ubuntu
+docker run --memory=100m ubuntu
+
+Docker's File Storage Architecture
+
+When Docker is installed, it establishes a directory structure typically at /var/lib/docker. This root directory contains several subdirectories that serve different purposes:
+
+Docker optimizes builds by reusing layers that remain unchanged between images. Consider a scenario with two nearly identical applications:
+
+
+Since the first three layers are identical in both Dockerfiles, Docker reuses the cached layers, significantly speeding up the build process and saving disk space. Even when updating application code, only the modified layers are rebuilt.
+
+
+DOCKER STORAGE:
+
+When Docker is installed, it establishes a directory structure typically at /var/lib/docker
+
+Visualize the image layers from the base to the top:
+
+Base Ubuntu layer.
+APT package installation.
+Python and Flask dependencies.
+Application source code.
+Entrypoint setup.
+
+1.Once built, these layers are read-only on image.
+2.When you run a container from the image, Docker adds a new, writable layer on top
+3.captures any changes made during runtime—be it log files or temporary modifications
+4.Docker uses a copy-on-write mechanism: it copies the original file to the writable layer and then applies any changes
+5.When the container stops or is removed, this writable layer is also discarded.
+
+To ensure data persists beyond the lifecycle of a container, Docker offers volumes
+
+1.Creating and Using Volumes
+docker volume create data_volume
+
+2.Run a Container with a Volume:
+docker run -v data_volume:/var/lib/mysql mysql
+
+3.If you specify a volume that does not yet exist, such as data_volume2, Docker will automatically create it and mount it:
+docker run -v data_volume2:/var/lib/mysql mysql
+
+
+Alternatively, you can use bind mounts to link a specific host directory to the container, for instance:
+
+docker run -v /data/mysql:/var/lib/mysql mysql
+
+the newer and preferred method is using the --mount
+
+docker run \
+--mount type=bind,source=/data/mysql,target=/var/lib/mysql \
+mysql
+
+
+Docker storage drivers manage the layered filesystem, create writable layers, and implement the copy-on-write mechanism
+is STORAGE DRIVERS:
+for ubuntu: AUFS
+
+DOCKER NETWORK:
+
+1.By default, Docker creates three networks upon installation: bridge, none, and host.
+2.When you launch a container without specifying a network, it connects to the bridge network by default
+docker run ubuntu
+
+3.You can also choose a different network using the --network parameter. For instance:
+docker run ubuntu --network none
+docker run ubuntu --network host
+
+
+
+ECS:Elastice container service
+
+Amazon ECS (Elastic Container Service) is a service by AWS that helps you run and manage Docker containers on the cloud — without managing servers manually.
+
+📦 What is a Container?
+A container is like a lightweight package of your app (code, libraries, dependencies) that runs the same everywhere.
+
+ECS lets you run these containers in the cloud, automatically.
+
+| Feature               | Benefit                       |
+| --------------------- | ----------------------------- |
+| Task Definitions      | Say what to run and how       |
+| Services              | Keep apps running             |
+| Auto Scaling          | Handle traffic automatically  |
+| Load Balancer Support | Expose app to the internet    |
+| IAM Integration       | Secure access to AWS services |
+| Logs & Metrics        | Monitor containers easily     |
+
+
+
+
+
+

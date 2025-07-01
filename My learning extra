@@ -1,0 +1,48 @@
+How this all works together
+
+Developer ->develop the code -> put in github
+then the you build the docker image-> 
+then send the image to ECR- Elastic container Registry
+then the ECS in AWS fetch the image and run run the container
+now the ELB and ECS service together works to run the application in the web
+
+Real-World DevOps Flow
+Let’s imagine you’re in a real project.
+
+1. Developer finishes code and pushes to GitHub
+git push origin main
+
+2. You (DevOps) pull that code
+git clone https://github.com/team/voting-app.git
+
+3. You write a Dockerfile and build an image
+docker build -t voting-app:latest .
+
+4. Push that image to ECR
+aws ecr get-login-password | docker login --username AWS --password-stdin xxxxxx.dkr.ecr.amazonaws.com
+docker tag voting-app:latest xxxxxx.dkr.ecr.amazonaws.com/voting-app
+docker push xxxxxx.dkr.ecr.amazonaws.com/voting-app
+
+5. Create ECS Task Definition
+
+{
+  "containerDefinitions": [{
+    "name": "voting-app",
+    "image": "xxxxx.dkr.ecr.amazonaws.com/voting-app",
+    "memory": 512,
+    "cpu": 256,
+    "portMappings": [{"containerPort": 5000}]
+  }]
+}
+6. Create ECS Service (Runs container)
+Choose:
+Cluster
+Task Definition
+Launch type (Fargate)
+Load Balancer (optional)
+AWS ECS starts your container and keeps it running.
+
+7. Your app is live on AWS!
+Example:
+http://voting-app-1234567890.ap-south-1.elb.amazonaws.com
+
