@@ -379,7 +379,13 @@ docker run ubuntu --network host
 
 ECS:Elastice container service
 
-Amazon ECS (Elastic Container Service) is a service by AWS that helps you run and manage Docker containers on the cloud — without managing servers manually.
+1.Amazon ECS (Elastic Container Service) is a service by AWS that helps you run and manage Docker containers on the cloud — without managing servers manually.
+2.Amazon Elastic Container Service (ECS) is AWS’s managed container orchestration service.
+3.A container orchestrator manages the resources or servers to schedule and run containers.
+4.Creating and deploying container instances.
+5.Monitoring container health and replacing or restarting containers if they crash.
+6.Distributing and load balancing applications across multiple servers.
+
 
 📦 What is a Container?
 A container is like a lightweight package of your app (code, libraries, dependencies) that runs the same everywhere.
